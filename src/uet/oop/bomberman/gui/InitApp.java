@@ -30,6 +30,8 @@ public class InitApp {
   public static final int CANVAS_WIDTH = Utils.CANVAS_WIDTH;
   public static final int CANVAS_HEIGHT = Utils.CANVAS_HEIGHT;
 
+  private static final String css_1 = "-fx-cursor: hand; -fx-background-color: transparent;";
+
   public static Scene getScene() {
     return scene;
   }
@@ -57,17 +59,28 @@ public class InitApp {
     imgStartBtnView.setFitWidth(240);
     Button startBtn = new Button();
     startBtn.setGraphic(imgStartBtnView);
-    startBtn.setLayoutX(520);
+    startBtn.setLayoutX(460);
     startBtn.setLayoutY(400);
     startBtn.setPrefSize(80, 80);
     startBtn.setOnAction(e -> {
       System.out.println("Start game");
     });
-    startBtn.setOnMouseEntered(new EventHandler< MouseEvent >(){
-      public void handle(MouseEvent event) {
-        startBtn.setStyle("-fx-cursor: hand;");
-      }
+    startBtn.setStyle(css_1);
+
+    // Create Setting button
+    Image imgSettingBtn = new Image(Utils.SRC_SETTING_BTN);
+    ImageView imgSettingBtnView = new ImageView(imgSettingBtn);
+    imgSettingBtnView.setFitHeight(80);
+    imgSettingBtnView.setFitWidth(80);
+    Button settingBtn = new Button();
+    settingBtn.setGraphic(imgSettingBtnView);
+    settingBtn.setLayoutX(740);
+    settingBtn.setLayoutY(400);
+    settingBtn.setPrefSize(80, 80);
+    settingBtn.setOnAction(e -> {
+      System.out.println("Setting page");
     });
+    settingBtn.setStyle(css_1);
 
     // Create Exit button
     Image imgExitBtn = new Image(Utils.SRC_QUIT_BTN);
@@ -82,13 +95,9 @@ public class InitApp {
     exitBtn.setOnAction(e -> {
       primaryStage.close();
     });
-    exitBtn.setOnMouseEntered(new EventHandler< MouseEvent >(){
-      public void handle(MouseEvent event) {
-        exitBtn.setStyle("-fx-cursor: hand;");
-      }
-    });
+    exitBtn.setStyle(css_1);
 
-    root.getChildren().setAll(canvas, startBtn, exitBtn, startScreenLogoView);
+    root.getChildren().setAll(canvas, startBtn, settingBtn, exitBtn, startScreenLogoView);
 
     primaryStage.setScene(scene);
   }

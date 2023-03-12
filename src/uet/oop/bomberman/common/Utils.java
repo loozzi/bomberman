@@ -9,4 +9,5 @@ public class Utils {
   public static final String SRC_START_BTN = "/textures/start.png";
   public static final String SRC_QUIT_BTN = "/textures/quit.png";
   public static final String SRC_START_SCREEN_LOGO = "/textures/startScreen.png";
+  public static final String SRC_SETTING_BTN = "/textures/setting.png";
 }
