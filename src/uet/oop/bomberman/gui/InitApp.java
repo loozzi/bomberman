@@ -15,6 +15,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.common.ButtonImage;
 import uet.oop.bomberman.common.Utils;
 
 import java.awt.*;
@@ -29,8 +30,6 @@ public class InitApp {
 
   public static final int CANVAS_WIDTH = Utils.CANVAS_WIDTH;
   public static final int CANVAS_HEIGHT = Utils.CANVAS_HEIGHT;
-
-  private static final String css_1 = "-fx-cursor: hand; -fx-background-color: transparent;";
 
   public static Scene getScene() {
     return scene;
@@ -53,51 +52,30 @@ public class InitApp {
     startScreenLogoView.setLayoutY(40);
 
     // Create Start button
-    Image imgStartBtn = new Image(Utils.SRC_START_BTN);
-    ImageView imgStartBtnView = new ImageView(imgStartBtn);
-    imgStartBtnView.setFitHeight(80);
-    imgStartBtnView.setFitWidth(240);
-    Button startBtn = new Button();
-    startBtn.setGraphic(imgStartBtnView);
-    startBtn.setLayoutX(460);
-    startBtn.setLayoutY(400);
-    startBtn.setPrefSize(80, 80);
-    startBtn.setOnAction(e -> {
-      System.out.println("Start game");
-    });
-    startBtn.setStyle(css_1);
+    Button startBtn = (new ButtonImage(Utils.SRC_START_BTN, 460, 400, 240, 80, Utils.CSS_BUTTON_IMAGE, e -> {
+      GameScreen.gameMenu.setVisible(true);
+    })).getButton();
 
     // Create Setting button
-    Image imgSettingBtn = new Image(Utils.SRC_SETTING_BTN);
-    ImageView imgSettingBtnView = new ImageView(imgSettingBtn);
-    imgSettingBtnView.setFitHeight(80);
-    imgSettingBtnView.setFitWidth(80);
-    Button settingBtn = new Button();
-    settingBtn.setGraphic(imgSettingBtnView);
-    settingBtn.setLayoutX(740);
-    settingBtn.setLayoutY(400);
-    settingBtn.setPrefSize(80, 80);
-    settingBtn.setOnAction(e -> {
-      System.out.println("Setting page");
-    });
-    settingBtn.setStyle(css_1);
+    Button settingBtn = (new ButtonImage(Utils.SRC_SETTING_BTN, 740, 400, 80, 80, Utils.CSS_BUTTON_IMAGE, e -> {
+      System.out.println("Setting event");
+    })).getButton();
 
     // Create Exit button
-    Image imgExitBtn = new Image(Utils.SRC_QUIT_BTN);
-    ImageView imgExitBtnView = new ImageView(imgExitBtn);
-    imgExitBtnView.setFitHeight(80);
-    imgExitBtnView.setFitWidth(360);
-    Button exitBtn = new Button();
-    exitBtn.setGraphic(imgExitBtnView);
-    exitBtn.setLayoutX(460);
-    exitBtn.setLayoutY(520);
-    exitBtn.setPrefSize(80, 80);
-    exitBtn.setOnAction(e -> {
+    Button exitBtn = (new ButtonImage(Utils.SRC_QUIT_BTN, 460, 520, 360, 80, Utils.CSS_BUTTON_IMAGE, e -> {
       primaryStage.close();
-    });
-    exitBtn.setStyle(css_1);
+    })).getButton();
 
-    root.getChildren().setAll(canvas, startBtn, settingBtn, exitBtn, startScreenLogoView);
+    root.getChildren().setAll(
+            canvas,
+            startBtn,
+            settingBtn,
+            exitBtn,
+            startScreenLogoView,
+            GameScreen.victory,
+            GameScreen.gameOver,
+            GameScreen.gameMenu
+    );
 
     primaryStage.setScene(scene);
   }

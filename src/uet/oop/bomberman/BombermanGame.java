@@ -3,6 +3,7 @@ package uet.oop.bomberman;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import uet.oop.bomberman.gui.GameScreen;
 import uet.oop.bomberman.gui.InitApp;
 
 public class BombermanGame extends Application {
@@ -16,6 +17,7 @@ public class BombermanGame extends Application {
   public void start(Stage stage) {
     primaryState = stage;
 
+    GameScreen.init();
     InitApp.init();
 
 //    primaryState.setResizable(false);
