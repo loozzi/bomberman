@@ -9,10 +9,10 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class Entity {
     //Tọa độ X tính từ góc trái trên trong Canvas
-    protected int x;
+    protected double x;
 
     //Tọa độ Y tính từ góc trái trên trong Canvas
-    protected int y;
+    protected double y;
 
     protected Image img;
 
@@ -21,6 +21,18 @@ public abstract class Entity {
         this.x = xUnit * Sprite.SCALED_SIZE;
         this.y = yUnit * Sprite.SCALED_SIZE;
         this.img = img;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public boolean checkCollide(double _x, double _y, Entity entity) {
+        return true;
     }
 
     public void render(GraphicsContext gc) {

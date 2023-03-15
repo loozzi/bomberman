@@ -15,6 +15,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.GameManagement;
 import uet.oop.bomberman.common.ButtonImage;
 import uet.oop.bomberman.common.Utils;
 
@@ -53,7 +54,8 @@ public class InitApp {
 
     // Create Start button
     Button startBtn = (new ButtonImage(Utils.SRC_START_BTN, 460, 400, 240, 80, Utils.CSS_BUTTON_IMAGE, e -> {
-      GameScreen.gameMenu.setVisible(true);
+      GameManagement.init("Level1.txt");
+      primaryStage.setScene(GameManagement.getScene());
     })).getButton();
 
     // Create Setting button
@@ -71,10 +73,7 @@ public class InitApp {
             startBtn,
             settingBtn,
             exitBtn,
-            startScreenLogoView,
-            GameScreen.victory,
-            GameScreen.gameOver,
-            GameScreen.gameMenu
+            startScreenLogoView
     );
 
     primaryStage.setScene(scene);

@@ -8,6 +8,8 @@ public class Utils {
   public static final int CANVAS_WIDTH = 1280;
   public static final int CANVAS_HEIGHT = 720;
 
+  public static final double SCALE_MAP = 1.2;
+
   public static final String CSS_BUTTON_IMAGE = "-fx-cursor: hand; -fx-background-color: transparent;";
 
   public static final String SRC_START_BTN = "/textures/start.png";
