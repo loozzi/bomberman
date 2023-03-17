@@ -14,7 +14,9 @@ public class GameScene {
 
   public static void drawEntity(List<Entity> entities) {
     for (Entity entity: entities) {
-      entity.render(gc);
+      if (entity.getIsActve()) {
+        entity.render(gc);
+      }
     }
   }
 

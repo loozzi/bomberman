@@ -235,6 +235,7 @@ public class Sprite {
 		int diff = time / 2;
 		return (animate % time > diff) ? x1 : x2; 
 	}
+
 	
 	public int getSize() {
 		return SIZE;

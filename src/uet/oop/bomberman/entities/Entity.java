@@ -16,6 +16,8 @@ public abstract class Entity {
 
     protected Image img;
 
+    protected boolean isActive = true;
+
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
     public Entity( int xUnit, int yUnit, Image img) {
         this.x = xUnit * Sprite.SCALED_SIZE;
@@ -29,6 +31,10 @@ public abstract class Entity {
 
     public double getY() {
         return y;
+    }
+
+    public boolean getIsActve() {
+        return isActive;
     }
 
     public boolean checkCollide(double _x, double _y, Entity entity) {
