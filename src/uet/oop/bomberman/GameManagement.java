@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
+import uet.oop.bomberman.common.SFX;
 import uet.oop.bomberman.common.Utils;
 import uet.oop.bomberman.controller.InputManager;
 import uet.oop.bomberman.entities.Entity;
@@ -21,6 +22,7 @@ import uet.oop.bomberman.entities.tiles.Portal;
 import uet.oop.bomberman.entities.tiles.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.gui.GameScene;
+import uet.oop.bomberman.gui.GameScreen;
 import uet.oop.bomberman.gui.InitApp;
 
 import java.io.File;
@@ -29,11 +31,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GameManagement {
-  static Stage primaryStage = BombermanGame.primaryState;
-  static Scene scene;
-  static Group root;
-  static Canvas canvas;
-  static GraphicsContext gc;
+  public static Stage primaryStage = BombermanGame.primaryState;
+  public static Scene scene;
+  public static Group root;
+  public static Canvas canvas;
+  public static GraphicsContext gc;
 
   private static AnimationTimer timer;
   private static long currentGameTime = 0;
@@ -72,7 +74,7 @@ public class GameManagement {
   }
 
   public static Bomber getBomber() {
-    for (Entity e: entities) {
+    for (Entity e : entities) {
       if (e instanceof Bomber) {
         return (Bomber) e;
       }
@@ -106,8 +108,8 @@ public class GameManagement {
       int c = sc.nextInt();
       String s = sc.nextLine();
       canvas.setWidth(Sprite.SCALED_SIZE * c * Utils.SCALE_MAP);
-      canvas.setHeight(Sprite.SCALED_SIZE * r * Utils.SCALE_MAP);
-      for (int i = 0; i < r; i++) {
+      canvas.setHeight(Sprite.SCALED_SIZE * (r + 2) * Utils.SCALE_MAP);
+      for (int i = 2; i < r + 2; i++) {
         s = sc.nextLine();
         for (int j = 0; j < c; j++) {
           switch (s.charAt(j)) {
@@ -149,20 +151,32 @@ public class GameManagement {
     }
 
   }
+
   public static void start() {
     currentGameTime = 0;
     startNanoTime = 0;
+    SFX.playMusic(SFX.bombermanMusic_media);
+
+    runningGame();
+  }
+
+  public static void runningGame() {
     timer = new AnimationTimer() {
       @Override
       public void handle(long l) {
-        if ((l - startNanoTime) / (1000000000/60) > currentGameTime) {
+        if ((l - startNanoTime) / (1000000000 / 60) > currentGameTime) {
           if (isPaused) {
-            startNanoTime += (1000000000/60);
+            startNanoTime += (1000000000 / 60);
           } else {
             ++currentGameTime;
           }
         }
-        if (!isPaused){
+
+        if (!isPaused) {
+          if (InputManager.isPauseGame()) {
+            root.getChildren().add(GameScreen.gameMenu);
+            pause();
+          }
           gc.clearRect(0, 0, Utils.CANVAS_WIDTH * Utils.SCALE_MAP, Utils.CANVAS_HEIGHT * Utils.SCALE_MAP);
           update();
           render();
@@ -177,18 +191,17 @@ public class GameManagement {
     GameScene.drawEntity(items);
     GameScene.drawEntity(bombs);
     GameScene.drawEntity(entities);
-
   }
 
   private static void update() {
-    for (Entity entity: entities) {
+    for (Entity entity : entities) {
       entity.update();
     }
-
   }
 
   public static void pause() {
-
+    isPaused = true;
+    timer.stop();
   }
 
   public static void freeze() {
@@ -196,7 +209,9 @@ public class GameManagement {
   }
 
   public static void resume() {
-
+    isPaused = false;
+    InputManager.resumeGame();
+    timer.start();
   }
 
   public static void reset() {

@@ -60,8 +60,10 @@ public class InitApp {
 
     // Create Setting button
     Button settingBtn = (new ButtonImage(Utils.SRC_SETTING_BTN, 740, 400, 80, 80, Utils.CSS_BUTTON_IMAGE, e -> {
-      System.out.println("Setting event");
+//      System.out.println("Setting event");
+      root.getChildren().add(GameScreen.gameSetting);
     })).getButton();
+
 
     // Create Exit button
     Button exitBtn = (new ButtonImage(Utils.SRC_QUIT_BTN, 460, 520, 360, 80, Utils.CSS_BUTTON_IMAGE, e -> {

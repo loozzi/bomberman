@@ -1,26 +1,36 @@
 package uet.oop.bomberman.gui;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.GameManagement;
 import uet.oop.bomberman.common.ButtonImage;
+import uet.oop.bomberman.common.SFX;
 import uet.oop.bomberman.common.Utils;
 
 public class GameScreen {
   public static StackPane victory;
   public static StackPane gameOver;
   public static StackPane gameMenu;
+  public static StackPane gameSetting;
   public static Button pauseBtn;
 
   public static void init() {
     initVictory();
     initGameOver();
     initGameMenu();
+    initGameSetting();
   }
 
   public static void initVictory() {
@@ -107,7 +117,8 @@ public class GameScreen {
     img.setLayoutY(50);
 
     Button btnResume = (new ButtonImage(Utils.SRC_TEXT_RESUME, 236, 150, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> {
-
+      GameManagement.root.getChildren().remove(gameMenu);
+      GameManagement.resume();
     })).getButton();
 
     Button btnRestart = (new ButtonImage(Utils.SRC_TEXT_RESTART, 236, 200, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> {
@@ -115,7 +126,7 @@ public class GameScreen {
     })).getButton();
 
     Button btnSetting = (new ButtonImage(Utils.SRC_TEXT_SETTING,236,250, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> {
-
+      GameManagement.root.getChildren().add(GameScreen.gameSetting);
     })).getButton();
 
     Button btnMainMenu = (new ButtonImage(Utils.SRC_TEXT_MAIN_MENU, 236, 300, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> {
@@ -127,8 +138,78 @@ public class GameScreen {
     gameMenu.getChildren().addAll(overlay, body);
     overlay.setOpacity(0.6);
     overlay.setOnMouseClicked(e -> {
+      try {
+        GameManagement.root.getChildren().remove(gameMenu);
+        GameManagement.resume();
+      } catch (Exception ignore) {
 
+      }
     });
   }
 
+  public static void initGameSetting() {
+    gameSetting = new StackPane();
+    gameSetting.setPrefSize(Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT);
+
+    Group body = new Group();
+
+    Canvas overlay = new Canvas(Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT);
+    GraphicsContext gc = overlay.getGraphicsContext2D();
+    gc.setFill(Color.BLACK);
+    gc.fillRect(0, 0, Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT);
+
+    ImageView img = new ImageView(new Image(Utils.SRC_GAME_SETTING));
+    img.setLayoutX(217);
+    img.setLayoutY(50);
+
+    Slider musicSlider = new Slider();
+    musicSlider.setMin(0);
+    musicSlider.setMax(100);
+    musicSlider.setLayoutX(272);
+    musicSlider.setLayoutY(170);
+    musicSlider.setValue(SFX.getVolumeMusic());
+    musicSlider.valueProperty().addListener(new ChangeListener<Number>() {
+      @Override
+      public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+        int nv = newValue.intValue();
+        SFX.setVolumeMusic(nv);
+      }
+    });
+
+
+    Slider sfxSlider = new Slider();
+    sfxSlider.setMin(0);
+    sfxSlider.setMax(100);
+    sfxSlider.setLayoutX(272);
+    sfxSlider.setLayoutY(250);
+    sfxSlider.setValue(SFX.getVolumeSFX());
+    sfxSlider.valueProperty().addListener(new ChangeListener<Number>() {
+      @Override
+      public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+        int nv = newValue.intValue();
+        SFX.setVolumeSFX(nv);
+      }
+    });
+
+    Button btnMainMenu = (new ButtonImage(Utils.SRC_TEXT_MAIN_MENU, 236, 300, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> {
+      try {
+        InitApp.root.getChildren().remove(gameSetting);
+        GameManagement.root.getChildren().remove(gameSetting);
+      } catch (Exception ignore) {
+
+      }
+    })).getButton();
+
+    body.getChildren().addAll(img, musicSlider, sfxSlider, btnMainMenu);
+    gameSetting.getChildren().addAll(overlay, body);
+    overlay.setOpacity(0.6);
+    overlay.setOnMouseClicked(e -> {
+      try {
+        InitApp.root.getChildren().remove(gameSetting);
+        GameManagement.root.getChildren().remove(gameSetting);
+      } catch (Exception ignore) {
+
+      }
+    });
+  }
 }

@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 
 public class InputManager {
   private static boolean up = false, down = false, left = false, right = false, setBomb = false, controlBomb = false,
-          f1 = false, f2 = false, f3 = false, f4 = false, f5 = false, f6 = false, f7 = false, f8 = false, f9 = false;
+          f1 = false, f2 = false, f3 = false, f4 = false, f5 = false, f6 = false, f7 = false, f8 = false, f9 = false, pauseGame = false;
 
   private static boolean inverted = false;
   private static long lastPressProcessed = 0;
@@ -49,6 +49,12 @@ public class InputManager {
         case K:
           if (System.currentTimeMillis() - lastPressProcessed > 200) {
             controlBomb = true;
+            lastPressProcessed = System.currentTimeMillis();
+          }
+          break;
+        case Q:
+          if (System.currentTimeMillis() - lastPressProcessed > 200) {
+            pauseGame = true;
             lastPressProcessed = System.currentTimeMillis();
           }
           break;
@@ -173,6 +179,10 @@ public class InputManager {
   }
 
 
+  public static void resumeGame() {
+    pauseGame = false;
+  }
+
   public static boolean isUp() {
     return up;
   }
@@ -195,6 +205,10 @@ public class InputManager {
 
   public static boolean isControlBomb() {
     return controlBomb;
+  }
+
+  public static boolean isPauseGame() {
+    return pauseGame;
   }
 
   public static boolean isF1() {return f1;}
