@@ -2,6 +2,7 @@ package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -31,11 +32,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GameManagement {
-  public static Stage primaryStage = BombermanGame.primaryState;
-  public static Scene scene;
-  public static Group root;
-  public static Canvas canvas;
-  public static GraphicsContext gc;
+  static Stage primaryStage = BombermanGame.primaryState;
+  static Scene scene;
+  static Group root;
+  static Canvas canvas;
+  static GraphicsContext gc;
 
   private static AnimationTimer timer;
   private static long currentGameTime = 0;
@@ -71,6 +72,14 @@ public class GameManagement {
 
   public static Scene getScene() {
     return scene;
+  }
+
+  public static void addLayer(Node layer) {
+    root.getChildren().addAll(layer);
+  }
+
+  public static void removeLayer(Node layer) {
+    root.getChildren().remove(layer);
   }
 
   public static Bomber getBomber() {
@@ -174,7 +183,7 @@ public class GameManagement {
 
         if (!isPaused) {
           if (InputManager.isPauseGame()) {
-            root.getChildren().add(GameScreen.gameMenu);
+            addLayer(GameScreen.gameMenu);
             pause();
           }
           gc.clearRect(0, 0, Utils.CANVAS_WIDTH * Utils.SCALE_MAP, Utils.CANVAS_HEIGHT * Utils.SCALE_MAP);
