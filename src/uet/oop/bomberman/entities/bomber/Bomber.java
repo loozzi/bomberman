@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities.bomber;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.GameManagement;
+import uet.oop.bomberman.common.Direction;
 import uet.oop.bomberman.common.SFX;
 import uet.oop.bomberman.controller.InputManager;
 import uet.oop.bomberman.entities.Entity;
@@ -62,15 +63,14 @@ public class Bomber extends Entity {
    * @param direction 1-down 2-up 3-left 4-right
    * @return true | false
    */
-  public boolean checkMoveAbility(double _x, double _y, int direction) {
+  public boolean checkMoveAbility(double _x, double _y, Direction direction) {
     List<Entity> merge = new ArrayList<Entity>();
     merge.addAll(GameManagement.getStillObjects());
     merge.addAll(GameManagement.getEntities());
     merge.addAll(GameManagement.getItems());
     merge.addAll(GameManagement.getBombs());
     switch (direction) {
-      // down - 1; up - 2; left - 3; right - 4;
-      case 1:
+      case DOWN:
         for (Entity entity: merge) {
           if ((_y + 28 > entity.getY() && _y <= entity.getY())
                   && ((_x < entity.getX() + 28 && _x >= entity.getX())
@@ -82,7 +82,7 @@ public class Bomber extends Entity {
           }
         }
         break;
-      case 2:
+      case UP:
         for (Entity entity: merge) {
           if ((_y < entity.getY() + 28 && _y > entity.getY())
                   && ((_x < entity.getX() + 28 && _x >= entity.getX())
@@ -94,7 +94,7 @@ public class Bomber extends Entity {
           }
         }
         break;
-      case 3:
+      case LEFT:
         for (Entity entity: merge) {
           if ((_x < entity.getX() + 28 && _x > entity.getX())
                   && ((_y < entity.getY() + 28 && _y >= entity.getY())
@@ -106,7 +106,7 @@ public class Bomber extends Entity {
           }
         }
         break;
-      case 4:
+      case RIGHT:
         for (Entity entity: merge) {
           if ((_x + 28 > entity.getX() && _x < entity.getX())
                   && ((_y < entity.getY() + 28 && _y >= entity.getY())
@@ -162,7 +162,7 @@ public class Bomber extends Entity {
    * @param _y new pointY
    * @param direction 1-down 2-up 3-left 4-right
    */
-  public void move(double _x, double _y, int direction) {
+  public void move(double _x, double _y, Direction direction) {
     timeAnimation = (timeAnimation > MAX_TIME_ANIMATION) ? 0 : timeAnimation + 1;
     if (this.checkMoveAbility(_x, _y, direction)) {
       x = _x;
@@ -171,16 +171,16 @@ public class Bomber extends Entity {
         SFX.playSFX(SFX.walking1_media);
       }
       switch (direction) {
-        case 1:
+        case DOWN:
           img = (Sprite.movingSprite(Sprite.player_down, Sprite.player_down_1, Sprite.player_down_2, timeAnimation, timeRunAnimation)).getFxImage();
           break;
-        case 2:
+        case UP:
           img = (Sprite.movingSprite(Sprite.player_up, Sprite.player_up_1, Sprite.player_up_2, timeAnimation, timeRunAnimation)).getFxImage();
           break;
-        case 3:
+        case LEFT:
           img = (Sprite.movingSprite(Sprite.player_left, Sprite.player_left_1, Sprite.player_left_2, timeAnimation, timeRunAnimation)).getFxImage();
           break;
-        case 4:
+        case RIGHT:
           img = (Sprite.movingSprite(Sprite.player_right, Sprite.player_right_1, Sprite.player_right_2, timeAnimation, timeRunAnimation)).getFxImage();
           break;
       }
@@ -193,16 +193,16 @@ public class Bomber extends Entity {
   public void moveHanlde() {
     // down - 1; up - 2; left - 3; right - 4;
     if (InputManager.isDown()) {
-      this.move(x, this.getMove(y, false), 1);
+      this.move(x, this.getMove(y, false), Direction.DOWN);
     }
     if (InputManager.isUp()) {
-      this.move(x, this.getMove(y, true), 2);
+      this.move(x, this.getMove(y, true), Direction.UP);
     }
     if (InputManager.isLeft()) {
-      this.move(this.getMove(x, true), y, 3);
+      this.move(this.getMove(x, true), y, Direction.LEFT);
     }
     if (InputManager.isRight()) {
-      this.move(this.getMove(x, false), y, 4);
+      this.move(this.getMove(x, false), y, Direction.RIGHT);
     }
   }
 }
