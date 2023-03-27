@@ -107,6 +107,14 @@ public class GameManagement {
     return items;
   }
 
+  public static void addBombs(Entity bomb) {
+    bombs.add(bomb);
+  }
+
+  public static void removeBombs(Entity bomb) {
+    bombs.remove(bomb);
+  }
+
   public static void loadMap(String mapSrc) {
     String map = "res/levels/" + mapSrc;
     File file = new File(map);
@@ -198,12 +206,16 @@ public class GameManagement {
   private static void render() {
     GameScene.drawEntity(stillObjects);
     GameScene.drawEntity(items);
-    GameScene.drawEntity(bombs);
     GameScene.drawEntity(entities);
+    GameScene.drawEntity(bombs);
   }
 
   private static void update() {
     for (Entity entity : entities) {
+      entity.update();
+    }
+
+    for (Entity entity : bombs) {
       entity.update();
     }
   }

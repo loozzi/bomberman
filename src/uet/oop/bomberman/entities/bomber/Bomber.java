@@ -7,6 +7,7 @@ import uet.oop.bomberman.common.SFX;
 import uet.oop.bomberman.controller.InputManager;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.enemies.Balloon;
+import uet.oop.bomberman.entities.enemies.Bomb;
 import uet.oop.bomberman.entities.enemies.Oneal;
 import uet.oop.bomberman.entities.items.BombItem;
 import uet.oop.bomberman.entities.items.FlameItem;
@@ -72,11 +73,11 @@ public class Bomber extends Entity {
     switch (direction) {
       case DOWN:
         for (Entity entity: merge) {
-          if ((_y + 28 > entity.getY() && _y <= entity.getY())
-                  && ((_x < entity.getX() + 28 && _x >= entity.getX())
-                  || (_x + 28 > entity.getX() && _x <= entity.getX()))
+          if ((_y + 30 > entity.getY() && _y <= entity.getY())
+                  && ((_x < entity.getX() + 30 && _x >= entity.getX())
+                  || (_x + 30 > entity.getX() && _x <= entity.getX()))
           ) {
-            if (!handleCollide(entity)) {
+            if (!handleCollide(entity, _x, _y)) {
               return false;
             }
           }
@@ -84,11 +85,11 @@ public class Bomber extends Entity {
         break;
       case UP:
         for (Entity entity: merge) {
-          if ((_y < entity.getY() + 28 && _y > entity.getY())
-                  && ((_x < entity.getX() + 28 && _x >= entity.getX())
-                  || (_x + 28 > entity.getX() && _x <= entity.getX()))
+          if ((_y < entity.getY() + 30 && _y > entity.getY())
+                  && ((_x < entity.getX() + 30 && _x >= entity.getX())
+                  || (_x + 30 > entity.getX() && _x <= entity.getX()))
           ) {
-            if (!handleCollide(entity)) {
+            if (!handleCollide(entity, _x, _y)) {
               return false;
             }
           }
@@ -96,11 +97,11 @@ public class Bomber extends Entity {
         break;
       case LEFT:
         for (Entity entity: merge) {
-          if ((_x < entity.getX() + 28 && _x > entity.getX())
-                  && ((_y < entity.getY() + 28 && _y >= entity.getY())
-                  || (_y + 28 > entity.getY() && _y <= entity.getY()))
+          if ((_x < entity.getX() + 30 && _x > entity.getX())
+                  && ((_y < entity.getY() + 30 && _y >= entity.getY())
+                  || (_y + 30 > entity.getY() && _y <= entity.getY()))
           ) {
-            if (!handleCollide(entity)) {
+            if (!handleCollide(entity, _x, _y)) {
               return false;
             }
           }
@@ -108,11 +109,11 @@ public class Bomber extends Entity {
         break;
       case RIGHT:
         for (Entity entity: merge) {
-          if ((_x + 28 > entity.getX() && _x < entity.getX())
-                  && ((_y < entity.getY() + 28 && _y >= entity.getY())
-                  || (_y + 28 > entity.getY() && _y <= entity.getY()))
+          if ((_x + 30 > entity.getX() && _x < entity.getX())
+                  && ((_y < entity.getY() + 30 && _y >= entity.getY())
+                  || (_y + 30 > entity.getY() && _y <= entity.getY()))
           ) {
-            if (!handleCollide(entity)) {
+            if (!handleCollide(entity, _x, _y)) {
               return false;
             }
           }
@@ -127,12 +128,12 @@ public class Bomber extends Entity {
    * @param entity Entity object
    * @return true | false - (true if collide brick or wall)
    */
-  public static boolean handleCollide(Entity entity) {
+  public static boolean handleCollide(Entity entity, double _x, double _y) {
     if (entity instanceof Wall || entity instanceof Brick) {
       return false;
     } else if (entity instanceof BombItem) {
-      System.out.println("Collide BombItem");
-      return true;
+      return Math.round(_x / 32) == Math.round(entity.getX() / 32)
+              && Math.round(_y / 32) == Math.round(entity.getY() / 32);
     } else if (entity instanceof FlameItem) {
       System.out.println("Collide FlameItem");
       return true;
@@ -203,6 +204,10 @@ public class Bomber extends Entity {
     }
     if (InputManager.isRight()) {
       this.move(this.getMove(x, false), y, Direction.RIGHT);
+    }
+    if (InputManager.isSetBomb() && GameManagement.getBombs().size() == 0) {
+      GameManagement.addBombs(new Bomb((int)(Math.round(super.getX()/32)), (int)(Math.round(super.getY()/32)), Sprite.bomb.getFxImage()));
+      System.out.println("set bomb " + (int)(Math.round(super.getX()/32)) + " " +  (int)(Math.round(super.getY()/32)) + " " + GameManagement.getBombs().size());
     }
   }
 }

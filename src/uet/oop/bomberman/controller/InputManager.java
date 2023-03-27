@@ -41,9 +41,12 @@ public class InputManager {
           }
           break;
         case H:
-          if (System.currentTimeMillis() - lastPressProcessed > 200) {
+//          if (System.currentTimeMillis() - lastPressProcessed > 200) {
+//            setBomb = true;
+//            lastPressProcessed = System.currentTimeMillis();
+//          }
+          if (!inverted) {
             setBomb = true;
-            lastPressProcessed = System.currentTimeMillis();
           }
           break;
         case K:
@@ -144,6 +147,8 @@ public class InputManager {
             left = false;
           }
           break;
+        case H:
+          setBomb = false;
         case K:
           controlBomb = false;
           break;
