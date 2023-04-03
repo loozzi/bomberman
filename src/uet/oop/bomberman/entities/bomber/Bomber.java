@@ -75,7 +75,7 @@ public class Bomber extends Entity {
         for (Entity entity: merge) {
           if ((_y + 30 > entity.getY() && _y <= entity.getY())
                   && ((_x < entity.getX() + 30 && _x >= entity.getX())
-                  || (_x + 30 > entity.getX() && _x <= entity.getX()))
+                  || (_x + 24 > entity.getX() && _x <= entity.getX()))
           ) {
             if (!handleCollide(entity, _x, _y)) {
               return false;
@@ -87,7 +87,7 @@ public class Bomber extends Entity {
         for (Entity entity: merge) {
           if ((_y < entity.getY() + 30 && _y > entity.getY())
                   && ((_x < entity.getX() + 30 && _x >= entity.getX())
-                  || (_x + 30 > entity.getX() && _x <= entity.getX()))
+                  || (_x + 24 > entity.getX() && _x <= entity.getX()))
           ) {
             if (!handleCollide(entity, _x, _y)) {
               return false;
@@ -109,7 +109,7 @@ public class Bomber extends Entity {
         break;
       case RIGHT:
         for (Entity entity: merge) {
-          if ((_x + 30 > entity.getX() && _x < entity.getX())
+          if ((_x + 24 > entity.getX() && _x < entity.getX())
                   && ((_y < entity.getY() + 30 && _y >= entity.getY())
                   || (_y + 30 > entity.getY() && _y <= entity.getY()))
           ) {
@@ -168,7 +168,7 @@ public class Bomber extends Entity {
     if (this.checkMoveAbility(_x, _y, direction)) {
       x = _x;
       y = _y;
-      if (timeAnimation % 20 == 0) {
+      if (timeAnimation % 41 == 0) {
         SFX.playSFX(SFX.walking1_media);
       }
       switch (direction) {
