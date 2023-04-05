@@ -133,7 +133,7 @@ public class Bomber extends Entity {
       return false;
     } else if (entity instanceof BombItem) {
       return Math.round(_x / 32) == Math.round(entity.getX() / 32)
-              && Math.round(_y / 32) == Math.round(entity.getY() / 32);
+              || Math.round(_y / 32) == Math.round(entity.getY() / 32);
     } else if (entity instanceof FlameItem) {
       System.out.println("Collide FlameItem");
       return true;
@@ -153,7 +153,6 @@ public class Bomber extends Entity {
     } else if (entity instanceof Grass) {
       return true;
     }
-    System.out.println("Collide ...");
     return false;
   }
 
@@ -168,8 +167,12 @@ public class Bomber extends Entity {
     if (this.checkMoveAbility(_x, _y, direction)) {
       x = _x;
       y = _y;
-      if (timeAnimation % 41 == 0) {
-        SFX.playSFX(SFX.walking1_media);
+      if (timeAnimation % 20 == 0) {
+        try {
+          SFX.playSFX(SFX.walking1_media);
+        } catch (Exception ignore) {
+
+        }
       }
       switch (direction) {
         case DOWN:
@@ -207,7 +210,6 @@ public class Bomber extends Entity {
     }
     if (InputManager.isSetBomb() && GameManagement.getBombs().size() == 0) {
       GameManagement.addBombs(new Bomb((int)(Math.round(super.getX()/32)), (int)(Math.round(super.getY()/32)), Sprite.bomb.getFxImage()));
-      System.out.println("set bomb " + (int)(Math.round(super.getX()/32)) + " " +  (int)(Math.round(super.getY()/32)) + " " + GameManagement.getBombs().size());
     }
   }
 }

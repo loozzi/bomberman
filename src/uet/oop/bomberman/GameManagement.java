@@ -214,10 +214,11 @@ public class GameManagement {
     for (Entity entity : entities) {
       entity.update();
     }
-
-    for (Entity entity : bombs) {
-      entity.update();
-    }
+    try {
+      for (Entity entity : bombs) {
+        entity.update();
+      }
+    } catch (Exception ignored) {}
   }
 
   public static void pause() {

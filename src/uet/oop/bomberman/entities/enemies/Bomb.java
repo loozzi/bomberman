@@ -21,8 +21,12 @@ public class Bomb extends Entity {
       super.img = (Sprite.movingSprite(Sprite.bomb_exploded, Sprite.bomb_exploded1, Sprite.bomb_exploded2, timeAnimation, timeRunAnimation)).getFxImage();
     }
     if (timeAnimation > 500) {
-      GameManagement.removeBombs(this);
+      exploded();
     }
+  }
+
+  public void exploded() {
+    GameManagement.removeBombs(this);
   }
 
 }

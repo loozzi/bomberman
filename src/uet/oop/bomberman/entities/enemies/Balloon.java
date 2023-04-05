@@ -28,7 +28,7 @@ public class Balloon extends Entity {
      * 	- 5: random
      * 	- 6: follow player
      */
-    this.type = (new Random()).nextInt(5) + 1;
+    this.type = (new Random()).nextInt(1) + 5;
     System.out.println(type);
 //    this.type = 1;
   }
