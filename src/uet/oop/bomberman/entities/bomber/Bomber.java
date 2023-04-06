@@ -131,7 +131,7 @@ public class Bomber extends Entity {
   public static boolean handleCollide(Entity entity, double _x, double _y) {
     if (entity instanceof Wall || entity instanceof Brick) {
       return false;
-    } else if (entity instanceof BombItem) {
+    } else if (entity instanceof Bomb) {
       return Math.round(_x / 32) == Math.round(entity.getX() / 32)
               || Math.round(_y / 32) == Math.round(entity.getY() / 32);
     } else if (entity instanceof FlameItem) {
@@ -167,13 +167,13 @@ public class Bomber extends Entity {
     if (this.checkMoveAbility(_x, _y, direction)) {
       x = _x;
       y = _y;
-      if (timeAnimation % 20 == 0) {
-        try {
-          SFX.playSFX(SFX.walking1_media);
-        } catch (Exception ignore) {
-
-        }
-      }
+//      if (timeAnimation % 20 == 0) {
+//        try {
+//          SFX.playSFX(SFX.walking1_media);
+//        } catch (Exception ignore) {
+//
+//        }
+//      }
       switch (direction) {
         case DOWN:
           img = (Sprite.movingSprite(Sprite.player_down, Sprite.player_down_1, Sprite.player_down_2, timeAnimation, timeRunAnimation)).getFxImage();
