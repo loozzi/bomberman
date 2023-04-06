@@ -115,6 +115,10 @@ public class GameManagement {
     bombs.remove(bomb);
   }
 
+  public static void removeEnemy(Entity enemy) {
+    entities.remove(enemy);
+  }
+
   public static void loadMap(String mapSrc) {
     String map = "res/levels/" + mapSrc;
     File file = new File(map);
@@ -129,6 +133,9 @@ public class GameManagement {
       for (int i = 2; i < r + 2; i++) {
         s = sc.nextLine();
         for (int j = 0; j < c; j++) {
+          if (s.charAt(j) != '#') {
+            stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
+          }
           switch (s.charAt(j)) {
             case '#':
               stillObjects.add(new Wall(j, i, Sprite.wall.getFxImage()));
@@ -157,9 +164,6 @@ public class GameManagement {
             case 's':
               items.add(new SpeedItem(j, i, Sprite.powerup_speed.getFxImage()));
               break;
-          }
-          if (s.charAt(j) != '#' && s.charAt(j) != '*') {
-            stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
           }
         }
       }
@@ -211,11 +215,14 @@ public class GameManagement {
   }
 
   private static void update() {
-    for (Entity entity : entities) {
-      entity.update();
-    }
     try {
+      for (Entity entity : entities) {
+        entity.update();
+      }
       for (Entity entity : bombs) {
+        entity.update();
+      }
+      for (Entity entity : stillObjects) {
         entity.update();
       }
     } catch (Exception ignored) {}
