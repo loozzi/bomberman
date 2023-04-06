@@ -1,7 +1,9 @@
 package uet.oop.bomberman.entities.enemies;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.GameManagement;
 import uet.oop.bomberman.common.Direction;
+import uet.oop.bomberman.common.SFX;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -17,6 +19,8 @@ public class Balloon extends Entity {
   private int timeAnimation = 0;
   private int timeRunAnimation = 40;
 
+  private boolean isKilled = false;
+
   public Balloon(int xUnit, int yUnit, Image img) {
     super(xUnit, yUnit, img);
     /**
@@ -30,27 +34,34 @@ public class Balloon extends Entity {
      */
     this.type = (new Random()).nextInt(1) + 5;
     System.out.println(type);
-//    this.type = 1;
   }
 
   @Override
   public void update() {
-    switch (this.type) {
-      case 1:
-        type_1();
-        break;
-      case 2:
-        type_2();
-        break;
-      case 3:
-        type_3();
-        break;
-      case 4:
-        type_4();
-        break;
-      case 5:
-        type_5();
-        break;
+    if (isKilled) {
+      timeAnimation = (timeAnimation > MAX_TIME_ANIMATION) ? 0 : timeAnimation + 1;
+      super.img = Sprite.balloom_dead.getFxImage();
+      if (timeAnimation > 80) {
+        GameManagement.removeEnemy(this);
+      }
+    } else {
+      switch (this.type) {
+        case 1:
+          type_1();
+          break;
+        case 2:
+          type_2();
+          break;
+        case 3:
+          type_3();
+          break;
+        case 4:
+          type_4();
+          break;
+        case 5:
+          type_5();
+          break;
+      }
     }
   }
 
@@ -58,7 +69,7 @@ public class Balloon extends Entity {
     if (direction != Direction.RIGHT) {
       direction = Direction.LEFT;
     }
-    if (EnemyController.checkMoveAbility(super.getX(), super.getY(), direction)) {
+    if (EnemyController.checkMoveAbility(this, direction)) {
       move(speed, direction);
     } else {
       if (direction == Direction.LEFT) {
@@ -73,7 +84,7 @@ public class Balloon extends Entity {
     if (direction != Direction.UP) {
       direction = Direction.DOWN;
     }
-    if (EnemyController.checkMoveAbility(super.getX(), super.getY(), direction)) {
+    if (EnemyController.checkMoveAbility(this, direction)) {
       move(speed, direction);
     } else {
       if (direction == Direction.UP) {
@@ -85,7 +96,7 @@ public class Balloon extends Entity {
   }
 
   private void type_3() {
-    if (EnemyController.checkMoveAbility(super.getX(), super.getY(), direction)) {
+    if (EnemyController.checkMoveAbility(this, direction)) {
       move(speed, direction);
       if (direction == Direction.UP || direction == Direction.DOWN) {
         super.x = Math.round(super.x / 32) * 32;
@@ -106,7 +117,7 @@ public class Balloon extends Entity {
   }
 
   private void type_4() {
-    if (EnemyController.checkMoveAbility(super.getX(), super.getY(), direction)) {
+    if (EnemyController.checkMoveAbility(this, direction)) {
       move(speed, direction);
       if (direction == Direction.UP || direction == Direction.DOWN) {
         super.x = Math.round(super.x / 32) * 32;
@@ -133,7 +144,7 @@ public class Balloon extends Entity {
       this.timeToRandom = 0;
     }
     Direction randDirection = Direction.values()[rand.nextInt(Direction.values().length)];
-    if (EnemyController.checkMoveAbility(super.getX(), super.getY(), randDirection)) {
+    if (EnemyController.checkMoveAbility(this, randDirection)) {
       if ((randDirection == Direction.RIGHT || randDirection == Direction.LEFT)
               && (direction == Direction.UP || direction == Direction.DOWN)
               && (timeToRandom % 64 == 0)
@@ -149,7 +160,7 @@ public class Balloon extends Entity {
       }
     }
 
-    if (EnemyController.checkMoveAbility(super.getX(), super.getY(), direction)) {
+    if (EnemyController.checkMoveAbility(this, direction)) {
       move(speed, direction);
       if (direction == Direction.UP || direction == Direction.DOWN) {
         super.x = Math.round(super.x / 32) * 32;
@@ -185,6 +196,8 @@ public class Balloon extends Entity {
   }
 
   public void killed() {
-
+    timeAnimation = 0;
+    isKilled = true;
+    SFX.playSFX(SFX.enemyDies_media);
   }
 }
