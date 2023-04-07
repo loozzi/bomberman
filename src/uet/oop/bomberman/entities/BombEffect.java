@@ -30,7 +30,7 @@ public class BombEffect extends Entity {
     public void update() {
         timeAnimation = (timeAnimation > MAX_TIME_ANIMATION) ? 0 : timeAnimation + 1;
         super.img = (Sprite.movingSprite(this.ef1, this.ef2, this.ef3, timeAnimation, timeRunAnimation)).getFxImage();
-        if (timeAnimation > 40) {
+        if (timeAnimation > timeRunAnimation) {
             GameManagement.removeBombs(this);
         }
     }
@@ -56,6 +56,12 @@ public class BombEffect extends Entity {
         }
 
         return null;
+    }
+
+    public void changeAnimation(Sprite ef1, Sprite ef2, Sprite ef3) {
+        this.ef1 = ef1;
+        this.ef2 = ef2;
+        this.ef3 = ef3;
     }
 
     public void hide() {

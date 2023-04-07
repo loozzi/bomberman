@@ -14,10 +14,10 @@ public class Bomb extends Entity {
     private int timeRunAnimation = 40;
     private boolean[] effects = {false, false, false, false};
     private boolean bombItemIsActive = false;
+    private boolean isExploded = false;
 
     public Bomb(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
-//        checkStillObject();
     }
 
     @Override
@@ -34,90 +34,119 @@ public class Bomb extends Entity {
     }
 
     public void exploded() {
-        if (timeAnimation > 280) {
+        if (!isExploded) {
             GameManagement.removeBombs(this);
-        } else {
-            // 0-tren 1-phai 2-duoi 3-trai
-            if (!effects[0]) {
-                BombEffect bombEffect = new BombEffect(
+            BombEffect bombEffect = new BombEffect(
+                    (int) Math.round(this.getX()/32),
+                    (int) Math.round(this.getY()/32),
+                    Sprite.bomb_exploded,
+                    Sprite.bomb_exploded1,
+                    Sprite.bomb_exploded2
+            );
+            GameManagement.addBombs(bombEffect);
+
+            isExploded = true;
+        }
+        // 0-tren 1-phai 2-duoi 3-trai
+        if (!effects[0]) {
+            BombEffect bombEffect = new BombEffect(
+                    (int) Math.round(this.getX()/32),
+                    (int) Math.round(this.getY()/32) - 1,
+                    Sprite.explosion_vertical_top_last,
+                    Sprite.explosion_vertical_top_last1,
+                    Sprite.explosion_vertical_top_last2
+            );
+            if (bombEffect.checkExplode() == null && bombItemIsActive) {
+                GameManagement.addBombs(new BombEffect(
                         (int) Math.round(this.getX()/32),
-                        (int) Math.round(this.getY()/32) - 1,
+                        (int) Math.round(this.getY()/32) - 2,
+                        Sprite.explosion_vertical_top_last,
+                        Sprite.explosion_vertical_top_last1,
+                        Sprite.explosion_vertical_top_last2
+                ));
+                bombEffect.changeAnimation(
                         Sprite.explosion_vertical,
                         Sprite.explosion_vertical1,
                         Sprite.explosion_vertical2
                 );
-                GameManagement.addBombs(bombEffect);
-                if (bombEffect.checkExplode() == null && bombItemIsActive) {
-                    GameManagement.addBombs(new BombEffect(
-                            (int) Math.round(this.getX()/32),
-                            (int) Math.round(this.getY()/32) - 2,
-                            Sprite.explosion_vertical,
-                            Sprite.explosion_vertical1,
-                            Sprite.explosion_vertical2
-                    ));
-                }
-                effects[0] = true;
             }
-            if (!effects[1]) {
-                BombEffect bombEffect = new BombEffect(
-                        (int) Math.round(this.getX()/32) + 1,
+            GameManagement.addBombs(bombEffect);
+            effects[0] = true;
+        }
+        if (!effects[1]) {
+            BombEffect bombEffect = new BombEffect(
+                    (int) Math.round(this.getX()/32) + 1,
+                    (int) Math.round(this.getY()/32),
+                    Sprite.explosion_horizontal_right_last,
+                    Sprite.explosion_horizontal_right_last1,
+                    Sprite.explosion_horizontal_right_last2
+            );
+            if (bombEffect.checkExplode() == null && bombItemIsActive) {
+                GameManagement.addBombs(new BombEffect(
+                        (int) Math.round(this.getX()/32) + 2,
                         (int) Math.round(this.getY()/32),
+                        Sprite.explosion_horizontal_right_last,
+                        Sprite.explosion_horizontal_right_last1,
+                        Sprite.explosion_horizontal_right_last2
+                ));
+                bombEffect.changeAnimation(
                         Sprite.explosion_horizontal,
                         Sprite.explosion_horizontal1,
                         Sprite.explosion_horizontal2
                 );
-                GameManagement.addBombs(bombEffect);
-                if (bombEffect.checkExplode() == null && bombItemIsActive) {
-                    GameManagement.addBombs(new BombEffect(
-                            (int) Math.round(this.getX()/32) + 2,
-                            (int) Math.round(this.getY()/32),
-                            Sprite.explosion_horizontal,
-                            Sprite.explosion_horizontal1,
-                            Sprite.explosion_horizontal2
-                    ));
-                }
-                effects[1] = true;
             }
-            if (!effects[2]) {
-                BombEffect bombEffect = new BombEffect(
+            GameManagement.addBombs(bombEffect);
+            effects[1] = true;
+        }
+        if (!effects[2]) {
+            BombEffect bombEffect = new BombEffect(
+                    (int) Math.round(this.getX()/32),
+                    (int) Math.round(this.getY()/32) + 1,
+                    Sprite.explosion_vertical_down_last,
+                    Sprite.explosion_vertical_down_last1,
+                    Sprite.explosion_vertical_down_last2
+            );
+            if (bombEffect.checkExplode() == null && bombItemIsActive) {
+                GameManagement.addBombs(new BombEffect(
                         (int) Math.round(this.getX()/32),
-                        (int) Math.round(this.getY()/32) + 1,
+                        (int) Math.round(this.getY()/32) + 2,
+                        Sprite.explosion_vertical_down_last,
+                        Sprite.explosion_vertical_down_last1,
+                        Sprite.explosion_vertical_down_last2
+                ));
+                bombEffect.changeAnimation(
                         Sprite.explosion_vertical,
                         Sprite.explosion_vertical1,
                         Sprite.explosion_vertical2
                 );
-                GameManagement.addBombs(bombEffect);
-                if (bombEffect.checkExplode() == null && bombItemIsActive) {
-                    GameManagement.addBombs(new BombEffect(
-                            (int) Math.round(this.getX()/32),
-                            (int) Math.round(this.getY()/32) + 2,
-                            Sprite.explosion_vertical,
-                            Sprite.explosion_vertical1,
-                            Sprite.explosion_vertical2
-                    ));
-                }
-                effects[2] = true;
             }
-            if (!effects[3]) {
-                BombEffect bombEffect = new BombEffect(
-                        (int) Math.round(this.getX()/32) - 1,
+            GameManagement.addBombs(bombEffect);
+            effects[2] = true;
+        }
+        if (!effects[3]) {
+            BombEffect bombEffect = new BombEffect(
+                    (int) Math.round(this.getX()/32) - 1,
+                    (int) Math.round(this.getY()/32),
+                    Sprite.explosion_horizontal_left_last,
+                    Sprite.explosion_horizontal_left_last1,
+                    Sprite.explosion_horizontal_left_last2
+            );
+            if (bombEffect.checkExplode() == null && bombItemIsActive) {
+                GameManagement.addBombs(new BombEffect(
+                        (int) Math.round(this.getX()/32) - 2,
                         (int) Math.round(this.getY()/32),
+                        Sprite.explosion_horizontal_left_last,
+                        Sprite.explosion_horizontal_left_last1,
+                        Sprite.explosion_horizontal_left_last2
+                ));
+                bombEffect.changeAnimation(
                         Sprite.explosion_horizontal,
                         Sprite.explosion_horizontal1,
                         Sprite.explosion_horizontal2
                 );
-                GameManagement.addBombs(bombEffect);
-                if (bombEffect.checkExplode() == null && bombItemIsActive) {
-                    GameManagement.addBombs(new BombEffect(
-                            (int) Math.round(this.getX()/32) - 2,
-                            (int) Math.round(this.getY()/32),
-                            Sprite.explosion_horizontal,
-                            Sprite.explosion_horizontal1,
-                            Sprite.explosion_horizontal2
-                    ));
-                }
-                effects[3] = true;
             }
+            GameManagement.addBombs(bombEffect);
+            effects[3] = true;
         }
     }
 }

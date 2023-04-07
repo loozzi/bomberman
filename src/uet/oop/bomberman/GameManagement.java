@@ -210,8 +210,8 @@ public class GameManagement {
   private static void render() {
     GameScene.drawEntity(stillObjects);
     GameScene.drawEntity(items);
-    GameScene.drawEntity(entities);
     GameScene.drawEntity(bombs);
+    GameScene.drawEntity(entities);
   }
 
   private static void update() {
