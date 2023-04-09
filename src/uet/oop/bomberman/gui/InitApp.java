@@ -23,17 +23,21 @@ import java.awt.*;
 
 public class InitApp {
   static Stage primaryStage = BombermanGame.primaryState;
-  static Scene scene;
+  private static Scene scene;
 
-  static Group root;
-  static GraphicsContext gc;
-  static Canvas canvas;
+  private static Group root;
+  private static GraphicsContext gc;
+  private static Canvas canvas;
 
   public static final int CANVAS_WIDTH = Utils.CANVAS_WIDTH;
   public static final int CANVAS_HEIGHT = Utils.CANVAS_HEIGHT;
 
   public static Scene getScene() {
     return scene;
+  }
+
+  public static void removeLayer(Node layer) {
+    root.getChildren().remove(layer);
   }
 
   public static void init() {
@@ -60,8 +64,10 @@ public class InitApp {
 
     // Create Setting button
     Button settingBtn = (new ButtonImage(Utils.SRC_SETTING_BTN, 740, 400, 80, 80, Utils.CSS_BUTTON_IMAGE, e -> {
-      System.out.println("Setting event");
+//      System.out.println("Setting event");
+      root.getChildren().add(GameScreen.gameSetting);
     })).getButton();
+
 
     // Create Exit button
     Button exitBtn = (new ButtonImage(Utils.SRC_QUIT_BTN, 460, 520, 360, 80, Utils.CSS_BUTTON_IMAGE, e -> {
