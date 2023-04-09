@@ -86,8 +86,8 @@ public class EnemyController {
             }
 
             if ((int) Math.round(entity.getX()/32) == (int) Math.round(_x/32)
-                && (int) Math.round(entity.getY()/32) == (int) Math.round(_y/32)
-                && entity instanceof BombEffect
+                    && (int) Math.round(entity.getY()/32) == (int) Math.round(_y/32)
+                    && entity instanceof BombEffect
             ) {
                 try {
                     ((Balloon) _entity).killed();

@@ -55,6 +55,16 @@ public class GameManagement {
   static boolean isFreezy;
   static boolean isBlind;
 
+  //Số bom trên sân.
+  private static int BombsInField = 0;
+
+  public static int getBombsInField() {
+    return BombsInField;
+  }
+
+  public static void ChangeBombsInField(int number) {
+    BombsInField += number;
+  }
   public static void init(String mapSrc) {
     root = new Group();
     scene = new Scene(root);
@@ -156,7 +166,7 @@ public class GameManagement {
               entities.add(new Oneal(j, i, Sprite.oneal_right1.getFxImage()));
               break;
             case 'b':
-              items.add(new BombItem(j, i, Sprite.bomb.getFxImage()));
+              items.add(new BombItem(j, i, Sprite.powerup_bombs.getFxImage()));
               break;
             case 'f':
               items.add(new FlameItem(j, i, Sprite.powerup_flames.getFxImage()));
@@ -223,6 +233,10 @@ public class GameManagement {
         entity.update();
       }
       for (Entity entity : stillObjects) {
+        entity.update();
+      }
+      //test
+      for (Entity entity : items) {
         entity.update();
       }
     } catch (Exception ignored) {}

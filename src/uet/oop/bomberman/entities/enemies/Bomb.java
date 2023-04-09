@@ -5,6 +5,7 @@ import uet.oop.bomberman.GameManagement;
 import uet.oop.bomberman.common.SFX;
 import uet.oop.bomberman.entities.BombEffect;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.bomber.Bomber;
 import uet.oop.bomberman.entities.tiles.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -16,16 +17,18 @@ public class Bomb extends Entity {
     private boolean bombItemIsActive = false;
     private boolean isExploded = false;
 
-    public Bomb(int xUnit, int yUnit, Image img) {
+    public Bomb(int xUnit, int yUnit, Image img, boolean bombItemIsActive) {
         super(xUnit, yUnit, img);
+        this.bombItemIsActive = bombItemIsActive;
     }
 
     @Override
     public void update() {
         timeAnimation = (timeAnimation > MAX_TIME_ANIMATION) ? 0 : timeAnimation + 1;
         super.img = (Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1, Sprite.bomb_2, timeAnimation, timeRunAnimation)).getFxImage();
-        if (timeAnimation == 200) {
+        if (timeAnimation == 240) {
             SFX.playSFX(SFX.bombExplodes_media);
+            GameManagement.ChangeBombsInField(-1);
         }
         if (timeAnimation > 240) {
             super.img = (Sprite.movingSprite(Sprite.bomb_exploded, Sprite.bomb_exploded1, Sprite.bomb_exploded2, timeAnimation, timeRunAnimation)).getFxImage();
