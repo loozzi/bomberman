@@ -48,6 +48,7 @@ public class GameManagement {
   private static List<Entity> stillObjects = new ArrayList<>();
   private static List<Entity> bombs = new ArrayList<>();
   private static List<Entity> items = new ArrayList<>();
+  private static List<Entity> itemsActivated = new ArrayList<>();
 
 
   // all status in a game
@@ -116,6 +117,9 @@ public class GameManagement {
   public static List<Entity> getItems() {
     return items;
   }
+  public static List<Entity> getItemsActivated() {
+    return itemsActivated;
+  }
 
   public static void addBombs(Entity bomb) {
     bombs.add(bomb);
@@ -125,6 +129,17 @@ public class GameManagement {
     bombs.remove(bomb);
   }
 
+  public static void addItemsActivated(Entity item) {
+    itemsActivated.add(item);
+  }
+
+  public static void removeItemsActivated(Entity item) {
+    itemsActivated.remove(item);
+  }
+
+  public static void resetItemsActivated() {
+    itemsActivated.clear();
+  }
   public static void removeEnemy(Entity enemy) {
     entities.remove(enemy);
   }
