@@ -317,7 +317,7 @@ public class Bomber extends Entity {
       this.move(this.getMove(x, false), y, Direction.RIGHT);
     }
     if (InputManager.isSetBomb() && CheckLocationSetBomb() && GameManagement.getBombsInField() < Bombs) {
-      GameManagement.ChangeBombsInField(1);
+      //GameManagement.ChangeBombsInField(1);
       GameManagement.addBombs(new Bomb((int) (Math.round(super.getX() / 32)), (int) (Math.round(super.getY() / 32)), Sprite.bomb.getFxImage(), FlameItemIsActive));
     }
   }

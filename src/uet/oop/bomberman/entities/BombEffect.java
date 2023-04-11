@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.GameManagement;
 import uet.oop.bomberman.entities.bomber.Bomber;
 import uet.oop.bomberman.entities.enemies.Balloon;
+import uet.oop.bomberman.entities.enemies.Bomb;
 import uet.oop.bomberman.entities.tiles.Brick;
 import uet.oop.bomberman.entities.tiles.Wall;
 import uet.oop.bomberman.graphics.Sprite;
@@ -43,6 +44,9 @@ public class BombEffect extends Entity {
         } else if (entity instanceof Brick) {
             ((Brick) entity).setExploded();
             hide();
+        } else if (entity instanceof Bomb) {
+            ((Bomb) entity).ActiveNow();
+            hide();
         }
     }
 
@@ -51,6 +55,14 @@ public class BombEffect extends Entity {
             if ((entity.getX() == super.getX()
                     && (int) Math.round(entity.getY() / 32) == (int) Math.round(super.getY() / 32))) {
                 if (entity instanceof Wall || entity instanceof Brick) {
+                    return entity;
+                }
+            }
+        }
+        for (Entity entity : GameManagement.getBombs()) {
+            if ((entity.getX() == super.getX()
+                    && (int) Math.round(entity.getY() / 32) == (int) Math.round(super.getY() / 32))) {
+                if (entity instanceof Bomb) {
                     return entity;
                 }
             }

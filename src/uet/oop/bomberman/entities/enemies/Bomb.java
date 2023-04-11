@@ -24,16 +24,21 @@ public class Bomb extends Entity {
         this.bombItemIsActive = bombItemIsActive;
     }
 
+    public void ActiveNow() {
+        this.timeAnimation = 240;
+    }
+
     @Override
     public void update() {
+        System.out.println(Bomber.getBombs() + "   " + GameManagement.getBombsInField());
         timeAnimation = (timeAnimation > MAX_TIME_ANIMATION) ? 0 : timeAnimation + 1;
         super.img = (Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1, Sprite.bomb_2, timeAnimation, timeRunAnimation)).getFxImage();
         if (timeAnimation < 240 && InputManager.isDetonator() && Bomber.getDetonatorItemIsActive()) {
-            timeAnimation = 240;
+            ActiveNow();
         }
         if (timeAnimation == 240) {
             SFX.playSFX(SFX.bombExplodes_media);
-            GameManagement.ChangeBombsInField(-1);
+            //GameManagement.ChangeBombsInField(-1);
         }
         if (timeAnimation > 240) {
             super.img = (Sprite.movingSprite(Sprite.bomb_exploded, Sprite.bomb_exploded1, Sprite.bomb_exploded2, timeAnimation, timeRunAnimation)).getFxImage();

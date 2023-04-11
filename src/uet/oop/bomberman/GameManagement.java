@@ -12,6 +12,7 @@ import uet.oop.bomberman.common.Utils;
 import uet.oop.bomberman.controller.InputManager;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.enemies.Balloon;
+import uet.oop.bomberman.entities.enemies.Bomb;
 import uet.oop.bomberman.entities.enemies.Oneal;
 import uet.oop.bomberman.entities.bomber.Bomber;
 import uet.oop.bomberman.entities.items.*;
@@ -54,20 +55,21 @@ public class GameManagement {
   static boolean isFreezy;
   static boolean isBlind;
 
-  //Số bom trên sân.
-  private static int BombsInField = 0;
   //Level và tọa độ game.
   private static int level;
   private static int row;
   private static int col;
 
   public static int getBombsInField() {
-    return BombsInField;
+    int count = 0;
+    for (Entity entity : bombs) {
+      if (entity instanceof Bomb) {
+        count ++;
+      }
+    }
+    return count;
   }
 
-  public static void ChangeBombsInField(int number) {
-    BombsInField += number;
-  }
   public static void init(String mapSrc) {
     root = new Group();
     scene = new Scene(root);
