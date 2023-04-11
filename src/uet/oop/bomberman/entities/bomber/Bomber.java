@@ -34,6 +34,8 @@ public class Bomber extends Entity {
   private static boolean DetonatorItemIsActive = false;
   //Test
   private static boolean WallpassItemIsActive = false;
+  //Test
+  private static boolean FlamepassItemIsActive = false;
 
   public Bomber(int xUnit, int yUnit, Image img) {
     super(xUnit, yUnit, img);
@@ -73,9 +75,16 @@ public class Bomber extends Entity {
   public static void WallpassItemIsActive() {
     WallpassItemIsActive = true;
   }
+  public static void FlamepassItemIsActive() {
+    FlamepassItemIsActive = true;
+  }
 
   public static boolean getWallpassItemIsActive() {
     return WallpassItemIsActive;
+  }
+
+  public static boolean getFlamepassItemIsActive() {
+    return FlamepassItemIsActive;
   }
 
   /**
@@ -244,6 +253,10 @@ public class Bomber extends Entity {
       return true;
     } else if (entity instanceof WallpassItem) {
       System.out.println("Collide WallpassItem");
+      entity.setPicked_up();
+      return true;
+    } else if (entity instanceof FlamepassItem) {
+      System.out.println("Collide FlamepassItem");
       entity.setPicked_up();
       return true;
     }

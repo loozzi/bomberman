@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.GameManagement;
+import uet.oop.bomberman.entities.bomber.Bomber;
 import uet.oop.bomberman.entities.enemies.Balloon;
 import uet.oop.bomberman.entities.tiles.Brick;
 import uet.oop.bomberman.entities.tiles.Wall;
@@ -54,8 +55,21 @@ public class BombEffect extends Entity {
                 }
             }
         }
-
         return null;
+    }
+
+    public boolean FlamepassItemIsActivated() {
+        Entity entity = this.checkExplode();
+        if (Bomber.getFlamepassItemIsActive()) {
+            if (entity instanceof Wall
+                    && (entity.getX() / Sprite.SCALED_SIZE == 0 || entity.getY() / Sprite.SCALED_SIZE == 2
+                    || entity.getX() / Sprite.SCALED_SIZE == GameManagement.getCol() - 1
+                    || entity.getY() / Sprite.SCALED_SIZE == GameManagement.getRow() + 1)) {
+                return false;
+            }
+            return true;
+        }
+        return entity == null;
     }
 
     public void changeAnimation(Sprite ef1, Sprite ef2, Sprite ef3) {

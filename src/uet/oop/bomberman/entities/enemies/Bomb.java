@@ -7,6 +7,7 @@ import uet.oop.bomberman.controller.InputManager;
 import uet.oop.bomberman.entities.BombEffect;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.bomber.Bomber;
+import uet.oop.bomberman.entities.tiles.Brick;
 import uet.oop.bomberman.entities.tiles.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -63,7 +64,7 @@ public class Bomb extends Entity {
                     Sprite.explosion_vertical_top_last1,
                     Sprite.explosion_vertical_top_last2
             );
-            if (bombEffect.checkExplode() == null && bombItemIsActive) {
+            if (bombEffect.FlamepassItemIsActivated() && bombItemIsActive) {
                 GameManagement.addBombs(new BombEffect(
                         (int) Math.round(this.getX()/32),
                         (int) Math.round(this.getY()/32) - 2,
@@ -88,7 +89,7 @@ public class Bomb extends Entity {
                     Sprite.explosion_horizontal_right_last1,
                     Sprite.explosion_horizontal_right_last2
             );
-            if (bombEffect.checkExplode() == null && bombItemIsActive) {
+            if (bombEffect.FlamepassItemIsActivated() && bombItemIsActive) {
                 GameManagement.addBombs(new BombEffect(
                         (int) Math.round(this.getX()/32) + 2,
                         (int) Math.round(this.getY()/32),
@@ -113,7 +114,7 @@ public class Bomb extends Entity {
                     Sprite.explosion_vertical_down_last1,
                     Sprite.explosion_vertical_down_last2
             );
-            if (bombEffect.checkExplode() == null && bombItemIsActive) {
+            if (bombEffect.FlamepassItemIsActivated() && bombItemIsActive) {
                 GameManagement.addBombs(new BombEffect(
                         (int) Math.round(this.getX()/32),
                         (int) Math.round(this.getY()/32) + 2,
@@ -138,7 +139,7 @@ public class Bomb extends Entity {
                     Sprite.explosion_horizontal_left_last1,
                     Sprite.explosion_horizontal_left_last2
             );
-            if (bombEffect.checkExplode() == null && bombItemIsActive) {
+            if (bombEffect.FlamepassItemIsActivated() && bombItemIsActive) {
                 GameManagement.addBombs(new BombEffect(
                         (int) Math.round(this.getX()/32) - 2,
                         (int) Math.round(this.getY()/32),

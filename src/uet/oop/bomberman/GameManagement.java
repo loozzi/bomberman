@@ -211,6 +211,9 @@ public class GameManagement {
             case 'w':
               items.add(new WallpassItem(j, i, Sprite.powerup_wallpass.getFxImage()));
               break;
+            case 'l':
+              items.add(new FlamepassItem(j, i, Sprite.powerup_flamepass.getFxImage()));
+              break;
           }
         }
       }
