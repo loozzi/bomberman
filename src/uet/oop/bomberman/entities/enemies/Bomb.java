@@ -3,6 +3,7 @@ package uet.oop.bomberman.entities.enemies;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.GameManagement;
 import uet.oop.bomberman.common.SFX;
+import uet.oop.bomberman.controller.InputManager;
 import uet.oop.bomberman.entities.BombEffect;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.bomber.Bomber;
@@ -26,6 +27,9 @@ public class Bomb extends Entity {
     public void update() {
         timeAnimation = (timeAnimation > MAX_TIME_ANIMATION) ? 0 : timeAnimation + 1;
         super.img = (Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1, Sprite.bomb_2, timeAnimation, timeRunAnimation)).getFxImage();
+        if (timeAnimation < 240 && InputManager.isDetonator() && Bomber.getDetonatorItemIsActive()) {
+            timeAnimation = 240;
+        }
         if (timeAnimation == 240) {
             SFX.playSFX(SFX.bombExplodes_media);
             GameManagement.ChangeBombsInField(-1);

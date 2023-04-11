@@ -11,6 +11,7 @@ import uet.oop.bomberman.entities.enemies.Balloon;
 import uet.oop.bomberman.entities.enemies.Bomb;
 import uet.oop.bomberman.entities.enemies.Oneal;
 import uet.oop.bomberman.entities.items.BombItem;
+import uet.oop.bomberman.entities.items.DetonatorItem;
 import uet.oop.bomberman.entities.items.FlameItem;
 import uet.oop.bomberman.entities.items.SpeedItem;
 import uet.oop.bomberman.entities.tiles.Brick;
@@ -32,6 +33,8 @@ public class Bomber extends Entity {
   private static int Bombs = 1;
   //Biến đã nhặt được item Flame chưa.
   private static boolean FlameItemIsActive = false;
+  //Test
+  private static boolean DetonatorItemIsActive = false;
 
   public Bomber(int xUnit, int yUnit, Image img) {
     super(xUnit, yUnit, img);
@@ -58,6 +61,14 @@ public class Bomber extends Entity {
 
   public static int getBombs() {
     return Bombs;
+  }
+
+  public static void DetonatorItemIsActive() {
+    DetonatorItemIsActive = true;
+  }
+
+  public static boolean getDetonatorItemIsActive() {
+    return DetonatorItemIsActive;
   }
 
   /**
@@ -207,6 +218,9 @@ public class Bomber extends Entity {
       System.out.println("Collide BombItem");
       entity.setPicked_up();
       return true;
+    } else if (entity instanceof DetonatorItem) {
+      System.out.println("Collide BombItem");
+      entity.setPicked_up();
     }
     return false;
   }

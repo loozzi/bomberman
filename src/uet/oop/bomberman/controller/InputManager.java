@@ -1,9 +1,10 @@
 package uet.oop.bomberman.controller;
 
 import javafx.scene.Scene;
+import uet.oop.bomberman.entities.items.DetonatorItem;
 
 public class InputManager {
-  private static boolean up = false, down = false, left = false, right = false, setBomb = false, controlBomb = false,
+  private static boolean up = false, down = false, left = false, right = false, setBomb = false, controlBomb = false, detonator = false,
           f1 = false, f2 = false, f3 = false, f4 = false, f5 = false, f6 = false, f7 = false, f8 = false, f9 = false, pauseGame = false;
 
   private static boolean inverted = false;
@@ -47,6 +48,11 @@ public class InputManager {
 //          }
           if (!inverted) {
             setBomb = true;
+          }
+          break;
+        case J:
+          if (!inverted) {
+            detonator = true;
           }
           break;
         case K:
@@ -152,6 +158,9 @@ public class InputManager {
         case K:
           controlBomb = false;
           break;
+        case J:
+          detonator = false;
+          break;
         case F1:
           f1 = false;
           break;
@@ -210,6 +219,10 @@ public class InputManager {
 
   public static boolean isControlBomb() {
     return controlBomb;
+  }
+
+  public static boolean isDetonator() {
+    return detonator;
   }
 
   public static boolean isPauseGame() {

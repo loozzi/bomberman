@@ -15,6 +15,7 @@ import uet.oop.bomberman.entities.enemies.Balloon;
 import uet.oop.bomberman.entities.enemies.Oneal;
 import uet.oop.bomberman.entities.bomber.Bomber;
 import uet.oop.bomberman.entities.items.BombItem;
+import uet.oop.bomberman.entities.items.DetonatorItem;
 import uet.oop.bomberman.entities.items.FlameItem;
 import uet.oop.bomberman.entities.items.SpeedItem;
 import uet.oop.bomberman.entities.tiles.Brick;
@@ -189,6 +190,8 @@ public class GameManagement {
             case 's':
               items.add(new SpeedItem(j, i, Sprite.powerup_speed.getFxImage()));
               break;
+            case 'd':
+              items.add(new DetonatorItem(j, i, Sprite.powerup_detonator.getFxImage()));
           }
         }
       }
