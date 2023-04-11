@@ -10,10 +10,7 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.enemies.Balloon;
 import uet.oop.bomberman.entities.enemies.Bomb;
 import uet.oop.bomberman.entities.enemies.Oneal;
-import uet.oop.bomberman.entities.items.BombItem;
-import uet.oop.bomberman.entities.items.DetonatorItem;
-import uet.oop.bomberman.entities.items.FlameItem;
-import uet.oop.bomberman.entities.items.SpeedItem;
+import uet.oop.bomberman.entities.items.*;
 import uet.oop.bomberman.entities.tiles.Brick;
 import uet.oop.bomberman.entities.tiles.Grass;
 import uet.oop.bomberman.entities.tiles.Portal;
@@ -35,6 +32,8 @@ public class Bomber extends Entity {
   private static boolean FlameItemIsActive = false;
   //Test
   private static boolean DetonatorItemIsActive = false;
+  //Test
+  private static boolean WallpassItemIsActive = false;
 
   public Bomber(int xUnit, int yUnit, Image img) {
     super(xUnit, yUnit, img);
@@ -69,6 +68,14 @@ public class Bomber extends Entity {
 
   public static boolean getDetonatorItemIsActive() {
     return DetonatorItemIsActive;
+  }
+
+  public static void WallpassItemIsActive() {
+    WallpassItemIsActive = true;
+  }
+
+  public static boolean getWallpassItemIsActive() {
+    return WallpassItemIsActive;
   }
 
   /**
@@ -186,6 +193,11 @@ public class Bomber extends Entity {
    */
   public static boolean handleCollide(Entity entity, double _x, double _y) {
     if (entity instanceof Wall || entity instanceof Brick) {
+      if (entity.getX() / Sprite.SCALED_SIZE != 0 && entity.getY() / Sprite.SCALED_SIZE != 2
+              && entity.getX() / Sprite.SCALED_SIZE != GameManagement.getCol() - 1
+              && entity.getY() / Sprite.SCALED_SIZE != GameManagement.getRow() + 1) {
+        return WallpassItemIsActive;
+      }
       return false;
     } else if (entity instanceof Bomb) {
       return Math.round(_x / 32) == Math.round(entity.getX() / 32)
@@ -219,8 +231,13 @@ public class Bomber extends Entity {
       entity.setPicked_up();
       return true;
     } else if (entity instanceof DetonatorItem) {
-      System.out.println("Collide BombItem");
+      System.out.println("Collide DetonatorItem");
       entity.setPicked_up();
+      return true;
+    } else if (entity instanceof WallpassItem) {
+      System.out.println("Collide WallpassItem");
+      entity.setPicked_up();
+      return true;
     }
     return false;
   }

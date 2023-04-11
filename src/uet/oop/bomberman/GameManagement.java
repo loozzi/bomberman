@@ -14,10 +14,7 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.enemies.Balloon;
 import uet.oop.bomberman.entities.enemies.Oneal;
 import uet.oop.bomberman.entities.bomber.Bomber;
-import uet.oop.bomberman.entities.items.BombItem;
-import uet.oop.bomberman.entities.items.DetonatorItem;
-import uet.oop.bomberman.entities.items.FlameItem;
-import uet.oop.bomberman.entities.items.SpeedItem;
+import uet.oop.bomberman.entities.items.*;
 import uet.oop.bomberman.entities.tiles.Brick;
 import uet.oop.bomberman.entities.tiles.Grass;
 import uet.oop.bomberman.entities.tiles.Portal;
@@ -59,6 +56,10 @@ public class GameManagement {
 
   //Số bom trên sân.
   private static int BombsInField = 0;
+  //Level và tọa độ game.
+  private static int level;
+  private static int row;
+  private static int col;
 
   public static int getBombsInField() {
     return BombsInField;
@@ -144,6 +145,17 @@ public class GameManagement {
   public static void removeEnemy(Entity enemy) {
     entities.remove(enemy);
   }
+  public static int getLevel() {
+    return level;
+  }
+
+  public static int getRow() {
+    return row;
+  }
+
+  public static int getCol() {
+    return col;
+  }
 
   public static void loadMap(String mapSrc) {
     String map = "res/levels/" + mapSrc;
@@ -151,8 +163,11 @@ public class GameManagement {
     try {
       Scanner sc = new Scanner(file);
       int l = sc.nextInt();
+      level = l;
       int r = sc.nextInt();
+      row = r;
       int c = sc.nextInt();
+      col = c;
       String s = sc.nextLine();
       canvas.setWidth(Sprite.SCALED_SIZE * c * Utils.SCALE_MAP);
       canvas.setHeight(Sprite.SCALED_SIZE * (r + 2) * Utils.SCALE_MAP);
@@ -192,6 +207,10 @@ public class GameManagement {
               break;
             case 'd':
               items.add(new DetonatorItem(j, i, Sprite.powerup_detonator.getFxImage()));
+              break;
+            case 'w':
+              items.add(new WallpassItem(j, i, Sprite.powerup_wallpass.getFxImage()));
+              break;
           }
         }
       }
