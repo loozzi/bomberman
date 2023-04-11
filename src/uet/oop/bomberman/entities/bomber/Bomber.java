@@ -90,6 +90,14 @@ public class Bomber extends Entity {
         result = false;
       }
     }
+    for (Entity entity : GameManagement.getStillObjects()) {
+      if (entity instanceof Brick || entity instanceof Wall) {
+        if ((int) (Math.round(entity.getX()) / 32) == (int) (Math.round(super.getX() / 32))
+                && (int) (Math.round(entity.getY()) / 32) == (int) (Math.round(super.getY() / 32))) {
+          result = false;
+        }
+      }
+    }
     return result;
   }
 
