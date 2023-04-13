@@ -43,6 +43,7 @@ public class GameManagement {
   private static long startNanoTime;
   static int score = 0;
   static int heart = 3;
+  static int remainingBombs = 20;
 
   // all object
   private static List<Entity> entities = new ArrayList<>();
@@ -136,7 +137,16 @@ public class GameManagement {
   }
 
   public static void addBombs(Entity bomb) {
-    bombs.add(bomb);
+    if (bomb instanceof Bomb) {
+      if (remainingBombs == 0) {
+        dies();
+      } else {
+        --remainingBombs;
+        bombs.add(bomb);
+      }
+    } else {
+      bombs.add(bomb);
+    }
   }
 
   public static void removeBombs(Entity bomb) {
@@ -184,6 +194,7 @@ public class GameManagement {
       case "Brick":
         score += 10;
     }
+    System.out.println(type);
   }
 
   public static void dies() {
@@ -288,7 +299,7 @@ public class GameManagement {
           gc.clearRect(0, 0, Utils.CANVAS_WIDTH * Utils.SCALE_MAP, Utils.CANVAS_HEIGHT * Utils.SCALE_MAP);
           update();
           render();
-          GameScene.updateMenubar(itemsActivated,(int) Math.round(currentGameTime/130.0), 10, 3);
+          GameScene.updateMenubar(itemsActivated,(int) Math.round(currentGameTime/130.0), score, heart, remainingBombs);
         }
       }
     };

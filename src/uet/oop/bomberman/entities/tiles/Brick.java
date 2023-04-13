@@ -25,6 +25,7 @@ public class Brick extends Entity {
     timeAnimation = (timeAnimation > MAX_TIME_ANIMATION) ? 0 : timeAnimation + 1;
     super.img = (Sprite.movingSprite(Sprite.brick_exploded, Sprite.brick_exploded1, Sprite.brick_exploded2, timeAnimation, timeRunAnimation)).getFxImage();
     if (timeAnimation > timeRunAnimation) {
+      GameManagement.increaseScore("Brick");
       GameManagement.getStillObjects().remove(this);
     }
   }

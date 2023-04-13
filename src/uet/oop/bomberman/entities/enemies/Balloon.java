@@ -43,6 +43,7 @@ public class Balloon extends Entity {
       super.img = Sprite.balloom_dead.getFxImage();
       if (timeAnimation >= 160) {
         GameManagement.removeEnemy(this);
+        GameManagement.increaseScore("Balloon");
       } else if (timeAnimation > 120) {
         super.img = Sprite.movingSprite(Sprite.mob_dead1, Sprite.mob_dead2, Sprite.mob_dead3, timeAnimation, timeRunAnimation).getFxImage();
       }

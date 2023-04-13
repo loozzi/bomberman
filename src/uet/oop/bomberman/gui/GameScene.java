@@ -1,9 +1,6 @@
 package uet.oop.bomberman.gui;
 
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -17,7 +14,6 @@ import uet.oop.bomberman.GameManagement;
 import uet.oop.bomberman.common.Utils;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.items.*;
-import uet.oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -33,6 +29,7 @@ public class GameScene {
   static GraphicsContext gcHeartSide;
   static Label timer;
   static Label score;
+  static Label remainingBombs;
   private static List<Image> listItem;
   private static int currentTime;
   private static int currentHeart;
@@ -50,7 +47,7 @@ public class GameScene {
   }
 
   public static void drawMenubar() {
-    currentTime = 0;
+    currentTime = 60;
     currentHeart = 0;
     menubar = new GridPane();
     leftSide = new Canvas(32 * maxItem * Utils.SCALE_MAP, 32 * Utils.SCALE_MAP);
@@ -58,8 +55,9 @@ public class GameScene {
     gcLeftSide = leftSide.getGraphicsContext2D();
     gcHeartSide = heartSide.getGraphicsContext2D();
     listItem = new ArrayList<>();
-    timer = new Label("Time left: 0");
+    timer = new Label("Time left: 60");
     score = new Label("Score: 0");
+    remainingBombs = new Label("Bombs: 20");
 
 
 //    listItem.add(new Image(Utils.SRC_BOMBPASS_DISABLED));
@@ -73,19 +71,22 @@ public class GameScene {
 
     timer.setStyle("-fx-font-size: 24; -fx-font-weight: bold;");
     score.setStyle("-fx-font-size: 24; -fx-font-weight: bold;");
+    remainingBombs.setStyle("-fx-font-size: 24; -fx-font-weight: bold;");
 
     ColumnConstraints col1 = new ColumnConstraints();
     ColumnConstraints col2 = new ColumnConstraints();
     ColumnConstraints col3 = new ColumnConstraints();
     ColumnConstraints col4 = new ColumnConstraints();
     ColumnConstraints col5 = new ColumnConstraints();
+    ColumnConstraints col6 = new ColumnConstraints();
 
     RowConstraints row = new RowConstraints();
-    col1.setPercentWidth(25);
-    col2.setPercentWidth(15);
-    col3.setPercentWidth(25);
-    col4.setPercentWidth(25);
-    col4.setPercentWidth(10);
+    col1.setPrefWidth(Math.round(Utils.CANVAS_WIDTH / 10.0));
+    col2.setPrefWidth(Math.round(Utils.CANVAS_WIDTH / 6.0));
+    col3.setPrefWidth(Math.round(Utils.CANVAS_WIDTH / 6.0));
+    col4.setPrefWidth(Math.round(Utils.CANVAS_WIDTH / 6.0));
+    col5.setPrefWidth(Math.round(Utils.CANVAS_WIDTH / 6.0));
+    col6.setPrefWidth(Math.round(Utils.CANVAS_WIDTH / 7.0));
 
     Button btnPause = new Button("Pause");
     btnPause.setPrefWidth(100);
@@ -99,17 +100,18 @@ public class GameScene {
     menubar.getRowConstraints().add(row);
     menubar.getColumnConstraints().addAll(col1, col2, col3, col4, col5);
 
-    menubar.add(leftSide, 0, 0);
-    menubar.add(heartSide, 1, 0);
+    menubar.add(heartSide, 0, 0);
+    menubar.add(leftSide, 1, 0);
     menubar.add(timer, 2, 0);
     menubar.add(score, 3, 0);
-    menubar.add(btnWrapper, 4, 0);
+    menubar.add(remainingBombs, 4, 0);
+    menubar.add(btnWrapper, 5, 0);
 
 
     GameManagement.getRoot().getChildren().add(menubar);
   }
 
-  public static void updateMenubar(List<Entity> itemActives, int time, int newScore, int newHeart) {
+  public static void updateMenubar(List<Entity> itemActives, int time, int newScore, int newHeart, int newRemainingBombs) {
     gcLeftSide.clearRect(0, 0, 32 * maxItem, 32 * Utils.SCALE_MAP);
     int bombsItemCount = 0;
     for (Entity entity : itemActives) {
@@ -140,13 +142,14 @@ public class GameScene {
     }
 
 
-    if (time != currentTime)
+    if (currentTime + time != 60)
     {
-      timer.setText(String.format("Time left: %d", time));
-      currentTime = time;
+      timer.setText(String.format("Time left: %d", currentTime));
+      --currentTime;
     }
 
     score.setText(String.format("Score: %d", newScore));
+    remainingBombs.setText(String.format("Bombs: %d", newRemainingBombs));
 
     if (newHeart != currentHeart) {
       gcHeartSide.clearRect(0, 0, 32 * 4, 32 * Utils.SCALE_MAP);
