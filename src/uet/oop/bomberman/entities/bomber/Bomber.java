@@ -210,9 +210,9 @@ public class Bomber extends Entity {
    */
   public static boolean handleCollide(Entity entity, double _x, double _y) {
     if (entity instanceof Wall || entity instanceof Brick) {
-      if (entity.getX() / Sprite.SCALED_SIZE != 0 && entity.getY() / Sprite.SCALED_SIZE != 2
+      if (entity.getX() / Sprite.SCALED_SIZE != 0 && entity.getY() / Sprite.SCALED_SIZE != 1
               && entity.getX() / Sprite.SCALED_SIZE != GameManagement.getCol() - 1
-              && entity.getY() / Sprite.SCALED_SIZE != GameManagement.getRow() + 1) {
+              && entity.getY() / Sprite.SCALED_SIZE != GameManagement.getRow()) {
         return WallpassItemIsActive;
       }
       return false;

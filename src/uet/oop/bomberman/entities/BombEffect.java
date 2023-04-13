@@ -74,9 +74,9 @@ public class BombEffect extends Entity {
         Entity entity = this.checkExplode();
         if (Bomber.getFlamepassItemIsActive()) {
             if (entity instanceof Wall
-                    && (entity.getX() / Sprite.SCALED_SIZE == 0 || entity.getY() / Sprite.SCALED_SIZE == 2
+                    && (entity.getX() / Sprite.SCALED_SIZE == 0 || entity.getY() / Sprite.SCALED_SIZE == 1
                     || entity.getX() / Sprite.SCALED_SIZE == GameManagement.getCol() - 1
-                    || entity.getY() / Sprite.SCALED_SIZE == GameManagement.getRow() + 1)) {
+                    || entity.getY() / Sprite.SCALED_SIZE == GameManagement.getRow())) {
                 return false;
             }
             return true;
