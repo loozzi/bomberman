@@ -28,6 +28,7 @@ import uet.oop.bomberman.gui.InitApp;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class GameManagement {
@@ -41,6 +42,7 @@ public class GameManagement {
   private static long currentGameTime = 0;
   private static long startNanoTime;
   static int score = 0;
+  static int heart = 3;
 
   // all object
   private static List<Entity> entities = new ArrayList<>();
@@ -60,16 +62,6 @@ public class GameManagement {
   private static int row;
   private static int col;
 
-  public static int getBombsInField() {
-    int count = 0;
-    for (Entity entity : bombs) {
-      if (entity instanceof Bomb) {
-        count ++;
-      }
-    }
-    return count;
-  }
-
   public static void init(String mapSrc) {
     root = new Group();
     scene = new Scene(root);
@@ -82,7 +74,25 @@ public class GameManagement {
     loadMap(mapSrc);
 
     root.getChildren().addAll(canvas);
+    GameScene.drawMenubar();
     start();
+  }
+
+  //|============================================|
+  //|            GETTER AND SETTER               |
+  //|============================================|
+  public static int getBombsInField() {
+    int count = 0;
+    for (Entity entity : bombs) {
+      if (entity instanceof Bomb) {
+        count ++;
+      }
+    }
+    return count;
+  }
+
+  public static Group getRoot() {
+    return root;
   }
 
   public static Scene getScene() {
@@ -159,6 +169,32 @@ public class GameManagement {
     return col;
   }
 
+  public static int getScore() {
+    return score;
+  }
+
+  public static void increaseScore(String type) {
+    switch (type) {
+      case "Balloon":
+        score += 100;
+        break;
+      case "Oneal":
+        score += 150;
+        break;
+      case "Brick":
+        score += 10;
+    }
+  }
+
+  public static void dies() {
+    heart--;
+  }
+
+
+  //|=======================================================|
+  //|               GAME MANAGEMENT                         |
+  //|=======================================================|
+
   public static void loadMap(String mapSrc) {
     String map = "res/levels/" + mapSrc;
     File file = new File(map);
@@ -172,8 +208,8 @@ public class GameManagement {
       col = c;
       String s = sc.nextLine();
       canvas.setWidth(Sprite.SCALED_SIZE * c * Utils.SCALE_MAP);
-      canvas.setHeight(Sprite.SCALED_SIZE * (r + 2) * Utils.SCALE_MAP);
-      for (int i = 2; i < r + 2; i++) {
+      canvas.setHeight(Sprite.SCALED_SIZE * (r + 1) * Utils.SCALE_MAP);
+      for (int i = 1; i < r + 1; i++) {
         s = sc.nextLine();
         for (int j = 0; j < c; j++) {
           if (s.charAt(j) != '#') {
@@ -220,7 +256,7 @@ public class GameManagement {
         }
       }
     } catch (Exception e) {
-      System.out.println(e);
+      System.out.println(e.toString());
     }
 
   }
@@ -247,12 +283,12 @@ public class GameManagement {
 
         if (!isPaused) {
           if (InputManager.isPauseGame()) {
-            addLayer(GameScreen.gameMenu);
             pause();
           }
           gc.clearRect(0, 0, Utils.CANVAS_WIDTH * Utils.SCALE_MAP, Utils.CANVAS_HEIGHT * Utils.SCALE_MAP);
           update();
           render();
+          GameScene.updateMenubar(itemsActivated,(int) Math.round(currentGameTime/130.0), 10, 3);
         }
       }
     };
@@ -284,7 +320,13 @@ public class GameManagement {
     } catch (Exception ignored) {}
   }
 
+
+  //|============================================|
+  //|            GAME CONTROLLER                 |
+  //|============================================|
+
   public static void pause() {
+    addLayer(GameScreen.gameMenu);
     isPaused = true;
     timer.stop();
   }

@@ -26,4 +26,15 @@ public class Utils {
   public static final String SRC_TEXT_RESUME = "/textures/resume.png";
   public static final String SRC_TEXT_RESTART = "/textures/restart.png";
   public static final String SRC_TEXT_SETTING = "/textures/setting2.png";
+  public static final String SRC_HEART = "/textures/heart.png";
+
+  // item disabled and item twice
+  public static final String SRC_BOMBS_DISABLED = "/sprites/powerup_bombs_disabled.png";
+  public static final String SRC_BOMBS_TWICE = "/sprites/powerup_bombs_twice.png";
+  public static final String SRC_DETONATOR_DISABLED = "/sprites/powerup_detonator_disabled.png";
+  public static final String SRC_FLAMEPASS_DISABLED = "/sprites/powerup_flamepass_disabled.png";
+  public static final String SRC_FLAMES_DISABLED = "/sprites/powerup_flames_disabled.png";
+  public static final String SRC_SPEED_DISABLED = "/sprites/powerup_speed_disabled.png";
+  public static final String SRC_WALLPASS_DISABLED = "/sprites/powerup_wallpass_disabled.png";
+
 }
