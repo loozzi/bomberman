@@ -9,6 +9,7 @@ import uet.oop.bomberman.entities.BombEffect;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.enemies.Balloon;
 import uet.oop.bomberman.entities.enemies.Bomb;
+import uet.oop.bomberman.entities.enemies.Doll;
 import uet.oop.bomberman.entities.enemies.Oneal;
 import uet.oop.bomberman.entities.items.*;
 import uet.oop.bomberman.entities.tiles.Brick;
@@ -259,6 +260,10 @@ public class Bomber extends Entity {
       System.out.println("Collide FlamepassItem");
       entity.setPicked_up();
       return true;
+    } else if (entity instanceof Doll) {
+      System.out.println("Collide Doll");
+      killed();
+      return true;
     }
     return false;
   }
@@ -317,7 +322,6 @@ public class Bomber extends Entity {
       this.move(this.getMove(x, false), y, Direction.RIGHT);
     }
     if (InputManager.isSetBomb() && CheckLocationSetBomb() && GameManagement.getBombsInField() < Bombs) {
-      //GameManagement.ChangeBombsInField(1);
       GameManagement.addBombs(new Bomb((int) (Math.round(super.getX() / 32)), (int) (Math.round(super.getY() / 32)), Sprite.bomb.getFxImage(), FlameItemIsActive));
     }
   }

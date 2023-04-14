@@ -37,7 +37,6 @@ public class Bomb extends Entity {
         }
         if (timeAnimation == 240) {
             SFX.playSFX(SFX.bombExplodes_media);
-            //GameManagement.ChangeBombsInField(-1);
         }
         if (timeAnimation > 240) {
             exploded();

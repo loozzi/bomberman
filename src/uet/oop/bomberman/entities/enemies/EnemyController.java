@@ -7,6 +7,7 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.items.BombItem;
 import uet.oop.bomberman.entities.tiles.Brick;
 import uet.oop.bomberman.entities.tiles.Wall;
+import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class EnemyController {
      * @param _entity Balloon or Oneal
      * @return true | false
      */
-    public static boolean checkMoveAbility(Entity _entity, Direction direction) {
+    public static boolean checkMoveAbility(Enemy _entity, Direction direction) {
         double _x = _entity.getX();
         double _y = _entity.getY();
         List<Entity> merge = new ArrayList<Entity>();
@@ -37,20 +38,39 @@ public class EnemyController {
                         if ((_x >= entity.getX() && _x < entity.getX() + size_block)
                                 || (_x + size_block > entity.getX() && _x + size_block < entity.getX() + size_block)
                         ) {
-                            if (entity instanceof Brick || entity instanceof Wall || entity instanceof BombItem)
+                            if (entity instanceof Brick || /*entity instanceof Wall ||*/ entity instanceof BombItem)
                                 return false;
+                            if (entity instanceof Wall) {
+                                if ((entity.getX() / Sprite.SCALED_SIZE == 0 || entity.getY() / Sprite.SCALED_SIZE == 1
+                                        || entity.getX() / Sprite.SCALED_SIZE == GameManagement.getCol() - 1
+                                        || entity.getY() / Sprite.SCALED_SIZE == GameManagement.getRow())) {
+                                    return false;
+                                } else if (_entity instanceof Doll) {
+                                    return true;
+                                }
+                                return false;
+                            }
                         }
                     }
 
                     break;
                 case UP:
-                    _y = Math.ceil(_y / 32) * 32;
+                    //_y = Math.ceil(_y / 32) * 32;
                     _x = Math.round(_x / 32) * 32;
                     if (_y == entity.getY() + 32) {
                         if ((_x >= entity.getX() && _x < entity.getX() + size_block)
                                 || (_x + size_block > entity.getX() && _x + size_block < entity.getX() + size_block)
                         ) {
-                            if ((entity instanceof Brick || entity instanceof Wall || entity instanceof Bomb)) {
+                            if (entity instanceof Brick || /*entity instanceof Wall ||*/ entity instanceof BombItem)
+                                return false;
+                            if (entity instanceof Wall) {
+                                if ((entity.getX() / Sprite.SCALED_SIZE == 0 || entity.getY() / Sprite.SCALED_SIZE == 1
+                                        || entity.getX() / Sprite.SCALED_SIZE == GameManagement.getCol() - 1
+                                        || entity.getY() / Sprite.SCALED_SIZE == GameManagement.getRow())) {
+                                    return false;
+                                } else if (_entity instanceof Doll) {
+                                    return true;
+                                }
                                 return false;
                             }
                         }
@@ -61,9 +81,19 @@ public class EnemyController {
                     _x = Math.floor(_x / 32) * 32;
                     if (_x == entity.getX()) {
                         if (_y >= entity.getY() && _y < entity.getY() + size_block) {
-                            if ((entity instanceof Brick || entity instanceof Wall || entity instanceof Bomb)
+                            if ((entity instanceof Brick /*|| entity instanceof Wall*/ || entity instanceof Bomb)
                                     || (_y + size_block > entity.getY() && _y + size_block < entity.getY() + size_block)
                             ) {
+                                return false;
+                            }
+                            if (entity instanceof Wall) {
+                                if ((entity.getX() / Sprite.SCALED_SIZE == 0 || entity.getY() / Sprite.SCALED_SIZE == 1
+                                        || entity.getX() / Sprite.SCALED_SIZE == GameManagement.getCol() - 1
+                                        || entity.getY() / Sprite.SCALED_SIZE == GameManagement.getRow())) {
+                                    return false;
+                                } else if (_entity instanceof Doll) {
+                                    return true;
+                                }
                                 return false;
                             }
                         }
@@ -74,9 +104,19 @@ public class EnemyController {
                     _x = Math.floor(_x / 32) * 32;
                     if (_x + size_block == entity.getX()) {
                         if (_y >= entity.getY() && _y < entity.getY() + size_block) {
-                            if ((entity instanceof Brick || entity instanceof Wall || entity instanceof Bomb)
+                            if ((entity instanceof Brick /*|| entity instanceof Wall*/ || entity instanceof Bomb)
                                     || (_y + size_block > entity.getY() && _y + size_block < entity.getY() + size_block)
                             ) {
+                                return false;
+                            }
+                            if (entity instanceof Wall) {
+                                if ((entity.getX() / Sprite.SCALED_SIZE == 0 || entity.getY() / Sprite.SCALED_SIZE == 1
+                                        || entity.getX() / Sprite.SCALED_SIZE == GameManagement.getCol() - 1
+                                        || entity.getY() / Sprite.SCALED_SIZE == GameManagement.getRow())) {
+                                    return false;
+                                } else if (_entity instanceof Doll) {
+                                    return true;
+                                }
                                 return false;
                             }
                         }
@@ -90,8 +130,7 @@ public class EnemyController {
                     && entity instanceof BombEffect
             ) {
                 try {
-                    ((Balloon) _entity).killed();
-//                     ((Oneal) _entity).killed();
+                    _entity.killed();
                 } catch (Exception ignored) {}
             }
         }

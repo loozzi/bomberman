@@ -13,6 +13,7 @@ import uet.oop.bomberman.controller.InputManager;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.enemies.Balloon;
 import uet.oop.bomberman.entities.enemies.Bomb;
+import uet.oop.bomberman.entities.enemies.Doll;
 import uet.oop.bomberman.entities.enemies.Oneal;
 import uet.oop.bomberman.entities.bomber.Bomber;
 import uet.oop.bomberman.entities.items.*;
@@ -244,6 +245,9 @@ public class GameManagement {
               break;
             case '2':
               entities.add(new Oneal(j, i, Sprite.oneal_right1.getFxImage()));
+              break;
+            case '3':
+              entities.add(new Doll(j, i, Sprite.doll_right1.getFxImage()));
               break;
             case 'b':
               items.add(new BombItem(j, i, Sprite.powerup_bombs.getFxImage()));

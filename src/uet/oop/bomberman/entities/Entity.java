@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import uet.oop.bomberman.entities.enemies.Doll;
 import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class Entity {
@@ -20,6 +21,7 @@ public abstract class Entity {
 
     //Item đã được nhặt hay chưa
     protected boolean picked_up = false;
+
 
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
     public Entity( int xUnit, int yUnit, Image img) {
@@ -39,12 +41,11 @@ public abstract class Entity {
     public boolean getIsActve() {
         return isActive;
     }
-    public void setPicked_up() {
-        this.picked_up = true;
-    }
-
     public boolean checkCollide(double _x, double _y, Entity entity) {
         return true;
+    }
+    public void setPicked_up() {
+        this.picked_up = true;
     }
 
     public void render(GraphicsContext gc) {

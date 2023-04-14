@@ -9,8 +9,8 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.Random;
 
-public class Balloon extends Entity {
-  private int type;
+public class Balloon extends Enemy {
+  /*private int type;
   private Direction direction = Direction.UP;
   private double speed = 0.5;
 
@@ -19,7 +19,7 @@ public class Balloon extends Entity {
   private int timeAnimation = 0;
   private int timeRunAnimation = 40;
 
-  private boolean isKilled = false;
+  private boolean isKilled = false;*/
 
   public Balloon(int xUnit, int yUnit, Image img) {
     super(xUnit, yUnit, img);
@@ -169,7 +169,6 @@ public class Balloon extends Entity {
         super.x = Math.round(super.x / 32) * 32;
       } else {
         super.y = Math.round(super.y / 32) * 32;
-
       }
     } else {
       direction = randDirection;
