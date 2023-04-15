@@ -8,7 +8,6 @@ public abstract class Enemy extends Entity {
     protected int type;
     protected Direction direction = Direction.UP;
     protected double speed = 0.5;
-
     protected int timeToRandom = 0;
     protected final int MAX_TIME_ANIMATION = 6000;
     protected int timeAnimation = 0;

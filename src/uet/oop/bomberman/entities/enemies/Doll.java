@@ -10,16 +10,6 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.util.Random;
 
 public class Doll extends Enemy {
-    /*private int type;
-    private Direction direction = Direction.UP;
-    private double speed = 0.5;
-
-    private int timeToRandom = 0;
-    private final int MAX_TIME_ANIMATION = 6000;
-    private int timeAnimation = 0;
-    private int timeRunAnimation = 40;
-
-    private static boolean isKilled = false;*/
 
     public Doll(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
@@ -44,11 +34,11 @@ public class Doll extends Enemy {
                     type_5();
                     break;
             }*/
-            type_5();
+            Random_move();
         }
     }
 
-    private void type_5() {
+    private void Random_move() {
         this.timeToRandom += 1;
         Random rand = new Random();
         if (this.timeToRandom == 6400) {

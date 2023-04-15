@@ -38,9 +38,7 @@ public class EnemyController {
                         if ((_x >= entity.getX() && _x < entity.getX() + size_block)
                                 || (_x + size_block > entity.getX() && _x + size_block < entity.getX() + size_block)
                         ) {
-                            if (entity instanceof Brick || /*entity instanceof Wall ||*/ entity instanceof BombItem)
-                                return false;
-                            if (entity instanceof Wall) {
+                            if (entity instanceof Brick || entity instanceof Wall || entity instanceof BombItem) {
                                 if ((entity.getX() / Sprite.SCALED_SIZE == 0 || entity.getY() / Sprite.SCALED_SIZE == 1
                                         || entity.getX() / Sprite.SCALED_SIZE == GameManagement.getCol() - 1
                                         || entity.getY() / Sprite.SCALED_SIZE == GameManagement.getRow())) {
@@ -55,15 +53,13 @@ public class EnemyController {
 
                     break;
                 case UP:
-                    //_y = Math.ceil(_y / 32) * 32;
+                    _y = Math.ceil(_y / 32) * 32;
                     _x = Math.round(_x / 32) * 32;
                     if (_y == entity.getY() + 32) {
                         if ((_x >= entity.getX() && _x < entity.getX() + size_block)
                                 || (_x + size_block > entity.getX() && _x + size_block < entity.getX() + size_block)
                         ) {
-                            if (entity instanceof Brick || /*entity instanceof Wall ||*/ entity instanceof BombItem)
-                                return false;
-                            if (entity instanceof Wall) {
+                            if ((entity instanceof Brick || entity instanceof Wall || entity instanceof Bomb)) {
                                 if ((entity.getX() / Sprite.SCALED_SIZE == 0 || entity.getY() / Sprite.SCALED_SIZE == 1
                                         || entity.getX() / Sprite.SCALED_SIZE == GameManagement.getCol() - 1
                                         || entity.getY() / Sprite.SCALED_SIZE == GameManagement.getRow())) {
@@ -81,12 +77,9 @@ public class EnemyController {
                     _x = Math.floor(_x / 32) * 32;
                     if (_x == entity.getX()) {
                         if (_y >= entity.getY() && _y < entity.getY() + size_block) {
-                            if ((entity instanceof Brick /*|| entity instanceof Wall*/ || entity instanceof Bomb)
+                            if ((entity instanceof Brick || entity instanceof Wall || entity instanceof Bomb)
                                     || (_y + size_block > entity.getY() && _y + size_block < entity.getY() + size_block)
                             ) {
-                                return false;
-                            }
-                            if (entity instanceof Wall) {
                                 if ((entity.getX() / Sprite.SCALED_SIZE == 0 || entity.getY() / Sprite.SCALED_SIZE == 1
                                         || entity.getX() / Sprite.SCALED_SIZE == GameManagement.getCol() - 1
                                         || entity.getY() / Sprite.SCALED_SIZE == GameManagement.getRow())) {
@@ -104,12 +97,9 @@ public class EnemyController {
                     _x = Math.floor(_x / 32) * 32;
                     if (_x + size_block == entity.getX()) {
                         if (_y >= entity.getY() && _y < entity.getY() + size_block) {
-                            if ((entity instanceof Brick /*|| entity instanceof Wall*/ || entity instanceof Bomb)
+                            if ((entity instanceof Brick || entity instanceof Wall || entity instanceof Bomb)
                                     || (_y + size_block > entity.getY() && _y + size_block < entity.getY() + size_block)
                             ) {
-                                return false;
-                            }
-                            if (entity instanceof Wall) {
                                 if ((entity.getX() / Sprite.SCALED_SIZE == 0 || entity.getY() / Sprite.SCALED_SIZE == 1
                                         || entity.getX() / Sprite.SCALED_SIZE == GameManagement.getCol() - 1
                                         || entity.getY() / Sprite.SCALED_SIZE == GameManagement.getRow())) {
