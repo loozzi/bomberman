@@ -4,21 +4,14 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.GameManagement;
 import uet.oop.bomberman.common.Direction;
 import uet.oop.bomberman.common.SFX;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.bomber.Bomber;
 import uet.oop.bomberman.graphics.Sprite;
-
 import java.util.Random;
-
-import static java.lang.Math.pow;
-import static jdk.nashorn.internal.objects.NativeMath.sqrt;
 
 public class Doll extends Enemy {
     private double speed  = 0.3;
 
     public Doll(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
-        //this.type = (new Random()).nextInt(1) + 5;
         System.out.println(type);
     }
 
@@ -34,11 +27,6 @@ public class Doll extends Enemy {
                 super.img = Sprite.movingSprite(Sprite.mob_dead1, Sprite.mob_dead2, Sprite.mob_dead3, timeAnimation, timeRunAnimation).getFxImage();
             }
         } else {
-            /*switch (this.type) {
-                case 5:
-                    type_5();
-                    break;
-            }*/
             Random_move();
         }
     }

@@ -7,8 +7,6 @@ import uet.oop.bomberman.controller.InputManager;
 import uet.oop.bomberman.entities.BombEffect;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.bomber.Bomber;
-import uet.oop.bomberman.entities.tiles.Brick;
-import uet.oop.bomberman.entities.tiles.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomb extends Entity {

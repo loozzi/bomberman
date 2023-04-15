@@ -5,7 +5,6 @@ import uet.oop.bomberman.GameManagement;
 import uet.oop.bomberman.common.SFX;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.bomber.Bomber;
-import uet.oop.bomberman.entities.enemies.Bomb;
 
 public class FlameItem extends Entity {
   public FlameItem(int xUnit, int yUnit, Image img) {
