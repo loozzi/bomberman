@@ -7,10 +7,7 @@ import uet.oop.bomberman.common.SFX;
 import uet.oop.bomberman.controller.InputManager;
 import uet.oop.bomberman.entities.BombEffect;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.enemies.Balloon;
-import uet.oop.bomberman.entities.enemies.Bomb;
-import uet.oop.bomberman.entities.enemies.Doll;
-import uet.oop.bomberman.entities.enemies.Oneal;
+import uet.oop.bomberman.entities.enemies.*;
 import uet.oop.bomberman.entities.items.*;
 import uet.oop.bomberman.entities.tiles.Brick;
 import uet.oop.bomberman.entities.tiles.Grass;
@@ -264,6 +261,9 @@ public class Bomber extends Entity {
       System.out.println("Collide Doll");
       killed();
       return true;
+    } else if (entity instanceof Kondoria) {
+      System.out.println("Collide Kondoria");
+      killed();
     }
     return false;
   }
