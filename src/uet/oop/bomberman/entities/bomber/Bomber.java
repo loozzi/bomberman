@@ -329,4 +329,5 @@ public class Bomber extends Entity {
   public static void killed() {
     System.out.println("killed");
   }
+
 }

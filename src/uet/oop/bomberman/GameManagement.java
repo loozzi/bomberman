@@ -194,6 +194,10 @@ public class GameManagement {
         break;
       case "Brick":
         score += 10;
+        break;
+      case "Doll":
+        score += 200;
+        break;
     }
     System.out.println(type);
   }

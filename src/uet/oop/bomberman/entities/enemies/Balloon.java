@@ -10,16 +10,7 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.util.Random;
 
 public class Balloon extends Enemy {
-  /*private int type;
-  private Direction direction = Direction.UP;
   private double speed = 0.5;
-
-  private int timeToRandom = 0;
-  private final int MAX_TIME_ANIMATION = 6000;
-  private int timeAnimation = 0;
-  private int timeRunAnimation = 40;
-
-  private boolean isKilled = false;*/
 
   public Balloon(int xUnit, int yUnit, Image img) {
     super(xUnit, yUnit, img);
