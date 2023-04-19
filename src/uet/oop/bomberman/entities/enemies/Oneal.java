@@ -64,11 +64,10 @@ public class Oneal extends Enemy {
   }
 
   private Direction getDirection() {
-    System.out.println("get direction of Oneal ");
     int[][] map2D = new int[GameManagement.getRow()][GameManagement.getCol()];
     Entity bomber = GameManagement.getBomber();
-    List<Entity> s = GameManagement.getStillObjects();
-//    s.addAll(GameManagement.getBombs());
+    List<Entity> stillObjects = GameManagement.getStillObjects();
+    List<Entity> bombs = GameManagement.getBombs();
     int x;
     int y;
 
@@ -76,7 +75,7 @@ public class Oneal extends Enemy {
       Arrays.fill(map2D[i], 0);
     }
 
-    for (Entity entity : s) {
+    for (Entity entity : stillObjects) {
       x = (int) Math.round(entity.getX() / 32);
       y = (int) Math.round(entity.getY() / 32);
       if (entity instanceof Wall || entity instanceof Brick) {
@@ -84,11 +83,11 @@ public class Oneal extends Enemy {
       }
     }
 
-    System.out.println(
-            (int) Math.round(this.getY() / 32 - 1) + " " +
-            (int) Math.round(this.getX() / 32) +  " " +
-            (int) Math.round(bomber.getY() / 32 - 1) +  " " +
-            (int) Math.round(bomber.getX() / 32));
+    for (Entity entity : bombs) {
+      x = (int) Math.round(entity.getX() / 32);
+      y = (int) Math.round(entity.getY() / 32);
+      map2D[y - 1][x] = 1;
+    }
 
     Stack<Direction> res = BFS.shortestPath(
             map2D,
