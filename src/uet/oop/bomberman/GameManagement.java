@@ -11,10 +11,7 @@ import uet.oop.bomberman.common.SFX;
 import uet.oop.bomberman.common.Utils;
 import uet.oop.bomberman.controller.InputManager;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.enemies.Balloon;
-import uet.oop.bomberman.entities.enemies.Bomb;
-import uet.oop.bomberman.entities.enemies.Doll;
-import uet.oop.bomberman.entities.enemies.Oneal;
+import uet.oop.bomberman.entities.enemies.*;
 import uet.oop.bomberman.entities.bomber.Bomber;
 import uet.oop.bomberman.entities.items.*;
 import uet.oop.bomberman.entities.tiles.Brick;
@@ -169,6 +166,9 @@ public class GameManagement {
   public static void removeEnemy(Entity enemy) {
     entities.remove(enemy);
   }
+  public static void addEnemy(Entity enemy) {
+    entities.add(enemy);
+  }
   public static int getLevel() {
     return level;
   }
@@ -198,6 +198,9 @@ public class GameManagement {
         break;
       case "Doll":
         score += 200;
+        break;
+      case "Kondoria":
+        score += 50;
         break;
     }
     System.out.println(type);
@@ -253,6 +256,9 @@ public class GameManagement {
               break;
             case '3':
               entities.add(new Doll(j, i, Sprite.doll_right1.getFxImage()));
+              break;
+            case '4':
+              entities.add(new Kondoria(j, i, Sprite.kondoria_right1.getFxImage()));
               break;
             case 'b':
               items.add(new BombItem(j, i, Sprite.powerup_bombs.getFxImage()));

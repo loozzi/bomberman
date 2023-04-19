@@ -23,6 +23,7 @@ public class Balloon extends Enemy {
      * 	- 6: follow player
      */
     this.type = (new Random()).nextInt(1) + 5;
+    this.direction = Direction.values()[rand.nextInt(Direction.values().length)];
     System.out.println(type);
   }
 
