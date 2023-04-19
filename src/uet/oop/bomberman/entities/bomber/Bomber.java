@@ -105,6 +105,14 @@ public class Bomber extends Entity {
         }
       }
     }
+    for (Entity entity : GameManagement.getEntities()) {
+      if (entity instanceof Enemy) {
+        if ((int) (Math.round(entity.getX()) / 32) == (int) (Math.round(super.getX() / 32))
+                && (int) (Math.round(entity.getY()) / 32) == (int) (Math.round(super.getY() / 32))) {
+          result = false;
+        }
+      }
+    }
     return result;
   }
 
@@ -228,7 +236,7 @@ public class Bomber extends Entity {
     } else if (entity instanceof Balloon) {
       System.out.println("Collide Balloon");
       killed();
-      return false;
+      return true;
     } else if (entity instanceof Oneal) {
       System.out.println("Collide Oneal");
       return true;

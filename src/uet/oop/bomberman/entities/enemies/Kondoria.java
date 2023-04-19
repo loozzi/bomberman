@@ -63,7 +63,6 @@ public class Kondoria extends Enemy {
                 super.x = Math.round(super.x / 32) * 32;
             } else {
                 super.y = Math.round(super.y / 32) * 32;
-
             }
         } else {
             direction = randDirection;
