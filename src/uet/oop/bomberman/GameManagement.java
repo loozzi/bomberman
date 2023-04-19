@@ -44,6 +44,7 @@ public class GameManagement {
   static int score = 0;
   static int heart = 3;
   static int remainingBombs = 20;
+  static String mapCurrent;
 
   // all object
   private static List<Entity> entities = new ArrayList<>();
@@ -64,6 +65,7 @@ public class GameManagement {
   private static int col;
 
   public static void init(String mapSrc) {
+    mapCurrent = mapSrc;
     root = new Group();
     scene = new Scene(root);
     canvas = new Canvas();
@@ -72,8 +74,8 @@ public class GameManagement {
     GameScene.setGraphicsContext(gc);
     InputManager.keyboardHandle(scene);
 
-    loadMap(mapSrc);
-
+    loadMap();
+    root.getChildren().clear();
     root.getChildren().addAll(canvas);
     GameScene.drawMenubar();
     start();
@@ -210,8 +212,8 @@ public class GameManagement {
   //|               GAME MANAGEMENT                         |
   //|=======================================================|
 
-  public static void loadMap(String mapSrc) {
-    String map = "res/levels/" + mapSrc;
+  public static void loadMap() {
+    String map = "res/levels/" + mapCurrent;
     File file = new File(map);
     try {
       Scanner sc = new Scanner(file);
@@ -359,17 +361,30 @@ public class GameManagement {
     timer.start();
   }
 
-  public static void reset() {
+  public static void reLoadMap() {
+    loadMap();
+  }
 
+  public static void reset() {
+    entities = new ArrayList<>();
+    stillObjects = new ArrayList<>();
+    bombs = new ArrayList<>();
+    items = new ArrayList<>();
+    itemsActivated = new ArrayList<>();
+    score = 0;
+    heart = 3;
+    remainingBombs = 20;
+    timer = null;
   }
 
   public static void exit() {
-    timer.stop();
-    entities.clear();
-    stillObjects.clear();
-    bombs.clear();
-
-    InitApp.init();
+    reset();
     primaryStage.setScene(InitApp.getScene());
+    SFX.pauseMusic();
+    try {
+      resume();
+    } catch (Exception ignore) {
+
+    }
   }
 }

@@ -104,6 +104,11 @@ public class SFX {
     }
 
     public static void playMusic(Media musicMedia) {
+        try {
+            sfxPlayer.dispose();
+        } catch (Exception ignore) {
+
+        }
         musicPlayer = new MediaPlayer(musicMedia);
         musicPlayer.play();
         musicPlayer.setVolume((double) volumeMusic / 100);

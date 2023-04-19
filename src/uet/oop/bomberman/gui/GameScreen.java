@@ -116,13 +116,14 @@ public class GameScreen {
     })).getButton();
 
     Button btnRestart = (new ButtonImage(Utils.SRC_TEXT_RESTART, 236, 200, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> {
-
+      GameManagement.reset();
+      GameManagement.reLoadMap();
     })).getButton();
 
     Button btnSetting = (new ButtonImage(Utils.SRC_TEXT_SETTING, 236, 250, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> GameManagement.addLayer(GameScreen.gameSetting))).getButton();
 
     Button btnMainMenu = (new ButtonImage(Utils.SRC_TEXT_MAIN_MENU, 236, 300, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> {
-
+      GameManagement.exit();
     })).getButton();
 
     body.getChildren().addAll(img, btnMainMenu, btnSetting, btnRestart, btnResume);
