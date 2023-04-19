@@ -137,6 +137,7 @@ public class Balloon extends Enemy {
     if (this.timeToRandom == 6400) {
       this.timeToRandom = 0;
     }
+
     Direction randDirection = Direction.values()[rand.nextInt(Direction.values().length)];
     if (EnemyController.checkMoveAbility(this, randDirection)) {
       if ((randDirection == Direction.RIGHT || randDirection == Direction.LEFT)
@@ -153,6 +154,7 @@ public class Balloon extends Enemy {
         direction = randDirection;
       }
     }
+
 
     if (EnemyController.checkMoveAbility(this, direction)) {
       move(speed, direction);
@@ -187,6 +189,7 @@ public class Balloon extends Enemy {
         break;
     }
   }
+
 
   public void killed() {
     timeAnimation = 0;
