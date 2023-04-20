@@ -143,6 +143,7 @@ public class GameManagement {
 
   public static void addItemsActivated(Entity item) {
     itemsActivated.add(item);
+    stillObjects.add(new Grass((int) (item.getX() / 32), (int) (item.getY() / 32), Sprite.grass.getFxImage()));
   }
 
   public static void removeItemsActivated(Entity item) {
@@ -237,8 +238,9 @@ public class GameManagement {
       for (int i = 1; i < row + 1; i++) {
         s = sc.nextLine();
         for (int j = 0; j < col; j++) {
+          Entity grass = new Grass(j, i, Sprite.grass.getFxImage());
           if (s.charAt(j) != '#') {
-            stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
+            stillObjects.add(grass);
           }
           switch (s.charAt(j)) {
             case '#':
@@ -249,6 +251,8 @@ public class GameManagement {
               break;
             case 'x':
               items.add(new Portal(j, i, Sprite.portal.getFxImage()));
+              stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
+              stillObjects.remove(grass);
               break;
             case 'p':
               entities.add(new Bomber(j, i, Sprite.player_down.getFxImage()));
@@ -267,21 +271,33 @@ public class GameManagement {
               break;
             case 'b':
               items.add(new BombItem(j, i, Sprite.powerup_bombs.getFxImage()));
+              stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
+              stillObjects.remove(grass);
               break;
             case 'f':
               items.add(new FlameItem(j, i, Sprite.powerup_flames.getFxImage()));
+              stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
+              stillObjects.remove(grass);
               break;
             case 's':
               items.add(new SpeedItem(j, i, Sprite.powerup_speed.getFxImage()));
+              stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
+              stillObjects.remove(grass);
               break;
             case 'd':
               items.add(new DetonatorItem(j, i, Sprite.powerup_detonator.getFxImage()));
+              stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
+              stillObjects.remove(grass);
               break;
             case 'w':
               items.add(new WallpassItem(j, i, Sprite.powerup_wallpass.getFxImage()));
+              stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
+              stillObjects.remove(grass);
               break;
             case 'l':
               items.add(new FlamepassItem(j, i, Sprite.powerup_flamepass.getFxImage()));
+              stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
+              stillObjects.remove(grass);
               break;
           }
         }
@@ -337,8 +353,8 @@ public class GameManagement {
   }
 
   private static void render() {
-    GameScene.drawEntity(stillObjects);
     GameScene.drawEntity(items);
+    GameScene.drawEntity(stillObjects);
     GameScene.drawEntity(bombs);
     GameScene.drawEntity(entities);
   }
