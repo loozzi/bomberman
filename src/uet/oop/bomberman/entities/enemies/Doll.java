@@ -8,7 +8,7 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.util.Random;
 
 public class Doll extends Enemy {
-    private double speed  = 0.3;
+    private double speed  = 0.32;
 
     public Doll(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
@@ -39,13 +39,13 @@ public class Doll extends Enemy {
         if (EnemyController.checkMoveAbility(this, randDirection)) {
             if ((randDirection == Direction.RIGHT || randDirection == Direction.LEFT)
                     && (direction == Direction.UP || direction == Direction.DOWN)
-                    && (timeToRandom % 64 == 0)
+                    && (timeToRandom % 100 == 0)
             ) {
                 this.timeToRandom = 0;
                 direction = randDirection;
             } else if ((direction == Direction.RIGHT || direction == Direction.LEFT)
                     && (randDirection == Direction.UP || randDirection == Direction.DOWN)
-                    && (timeToRandom % 64 == 0)
+                    && (timeToRandom % 100 == 0)
             ) {
                 this.timeToRandom = 0;
                 direction = randDirection;
