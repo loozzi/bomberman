@@ -23,7 +23,6 @@ public class Kondoria extends Enemy {
             super.img = Sprite.kondoria_dead.getFxImage();
             if (timeAnimation >= 160) {
                 GameManagement.removeEnemy(this);
-                GameManagement.increaseScore("Kondoria");
                 GameManagement.addEnemy(new Balloon((int) (x / Sprite.SCALED_SIZE), (int) (y / Sprite.SCALED_SIZE), Sprite.kondoria_right1.getFxImage()));
                 GameManagement.addEnemy(new Balloon((int) (x / Sprite.SCALED_SIZE), (int) (y / Sprite.SCALED_SIZE), Sprite.kondoria_right1.getFxImage()));
             } else if (timeAnimation > 120) {
@@ -93,8 +92,11 @@ public class Kondoria extends Enemy {
 
 
     public void killed() {
-        timeAnimation = 0;
-        isKilled = true;
-        SFX.playSFX(SFX.enemyDies_media);
+        if(!isKilled) {
+            timeAnimation = 0;
+            isKilled = true;
+            SFX.playSFX(SFX.enemyDies_media);
+            GameManagement.increaseScore("Kondoria");
+        }
     }
 }

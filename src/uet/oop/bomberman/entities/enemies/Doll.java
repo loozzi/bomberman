@@ -12,7 +12,6 @@ public class Doll extends Enemy {
 
     public Doll(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
-        System.out.println(type);
     }
 
     @Override
@@ -22,7 +21,6 @@ public class Doll extends Enemy {
             super.img = Sprite.doll_dead.getFxImage();
             if (timeAnimation >= 160) {
                 GameManagement.removeEnemy(this);
-                GameManagement.increaseScore("Doll");
             } else if (timeAnimation > 120) {
                 super.img = Sprite.movingSprite(Sprite.mob_dead1, Sprite.mob_dead2, Sprite.mob_dead3, timeAnimation, timeRunAnimation).getFxImage();
             }
@@ -90,8 +88,11 @@ public class Doll extends Enemy {
 
 
     public void killed() {
-        timeAnimation = 0;
-        isKilled = true;
-        SFX.playSFX(SFX.enemyDies_media);
+        if(!isKilled) {
+            timeAnimation = 0;
+            isKilled = true;
+            SFX.playSFX(SFX.enemyDies_media);
+            GameManagement.increaseScore("Doll");
+        }
     }
 }

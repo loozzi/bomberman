@@ -34,7 +34,6 @@ public class Balloon extends Enemy {
       super.img = Sprite.balloom_dead.getFxImage();
       if (timeAnimation >= 160) {
         GameManagement.removeEnemy(this);
-        GameManagement.increaseScore("Balloon");
       } else if (timeAnimation > 120) {
         super.img = Sprite.movingSprite(Sprite.mob_dead1, Sprite.mob_dead2, Sprite.mob_dead3, timeAnimation, timeRunAnimation).getFxImage();
       }
@@ -192,8 +191,11 @@ public class Balloon extends Enemy {
 
 
   public void killed() {
-    timeAnimation = 0;
-    isKilled = true;
-    SFX.playSFX(SFX.enemyDies_media);
+    if(!isKilled) {
+      timeAnimation = 0;
+      isKilled = true;
+      SFX.playSFX(SFX.enemyDies_media);
+      GameManagement.increaseScore("Balloon");
+    }
   }
 }
