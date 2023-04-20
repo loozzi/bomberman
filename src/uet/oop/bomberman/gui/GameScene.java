@@ -55,9 +55,9 @@ public class GameScene {
     gcLeftSide = leftSide.getGraphicsContext2D();
     gcHeartSide = heartSide.getGraphicsContext2D();
     listItem = new ArrayList<>();
-    timer = new Label("Time left: 60");
-    score = new Label("Score: 0");
-    remainingBombs = new Label("Bombs: 20");
+    timer = new Label();
+    score = new Label();
+    remainingBombs = new Label();
 
 
 //    listItem.add(new Image(Utils.SRC_BOMBPASS_DISABLED));
@@ -93,7 +93,6 @@ public class GameScene {
     btnPause.setOnAction(e -> {
       GameManagement.pause();
     });
-
     HBox btnWrapper = new HBox(btnPause);
     HBox.setMargin(btnPause, new Insets(8, 10, 10, 80));
 

@@ -116,8 +116,7 @@ public class GameScreen {
     })).getButton();
 
     Button btnRestart = (new ButtonImage(Utils.SRC_TEXT_RESTART, 236, 200, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> {
-      GameManagement.reset();
-      GameManagement.reLoadMap();
+      GameManagement.handleReset();
     })).getButton();
 
     Button btnSetting = (new ButtonImage(Utils.SRC_TEXT_SETTING, 236, 250, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> GameManagement.addLayer(GameScreen.gameSetting))).getButton();

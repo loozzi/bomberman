@@ -28,11 +28,8 @@ public class Bomber extends Entity {
   private static int Bombs = 1;
   //Biến đã nhặt được item Flame chưa.
   private static boolean FlameItemIsActive = false;
-  //Test
   private static boolean DetonatorItemIsActive = false;
-  //Test
   private static boolean WallpassItemIsActive = false;
-  //Test
   private static boolean FlamepassItemIsActive = false;
 
   public Bomber(int xUnit, int yUnit, Image img) {
@@ -47,7 +44,7 @@ public class Bomber extends Entity {
    * increasing speed.
    */
   public static void increaseSpeed() {
-    speed *= 2;
+    speed += 0.3;
   }
 
   public static void setFlameItemIsActive() {
@@ -55,11 +52,20 @@ public class Bomber extends Entity {
   }
 
   public static void BombItemIsActive() {
-    Bombs ++;
+    Bombs++;
   }
 
   public static int getBombs() {
     return Bombs;
+  }
+
+  public static void reset() {
+    Bombs = 1;
+    FlameItemIsActive = false;
+    DetonatorItemIsActive = false;
+    WallpassItemIsActive = false;
+    FlamepassItemIsActive = false;
+    speed = 0.7;
   }
 
   public static void DetonatorItemIsActive() {

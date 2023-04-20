@@ -6,6 +6,10 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import uet.oop.bomberman.common.SFX;
 import uet.oop.bomberman.common.Utils;
@@ -24,6 +28,8 @@ import uet.oop.bomberman.gui.GameScreen;
 import uet.oop.bomberman.gui.InitApp;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -60,23 +66,6 @@ public class GameManagement {
   private static int level;
   private static int row;
   private static int col;
-
-  public static void init(String mapSrc) {
-    mapCurrent = mapSrc;
-    root = new Group();
-    scene = new Scene(root);
-    canvas = new Canvas();
-    gc = canvas.getGraphicsContext2D();
-    gc.scale(Utils.SCALE_MAP, Utils.SCALE_MAP);
-    GameScene.setGraphicsContext(gc);
-    InputManager.keyboardHandle(scene);
-
-    loadMap();
-    root.getChildren().clear();
-    root.getChildren().addAll(canvas);
-    GameScene.drawMenubar();
-    start();
-  }
 
   //|============================================|
   //|            GETTER AND SETTER               |
@@ -214,24 +203,40 @@ public class GameManagement {
   //|=======================================================|
   //|               GAME MANAGEMENT                         |
   //|=======================================================|
+  public static void init(String mapSrc) {
+    mapCurrent = mapSrc;
+    root = new Group();
+    scene = new Scene(root);
+    canvas = new Canvas();
+    gc = canvas.getGraphicsContext2D();
+    gc.scale(Utils.SCALE_MAP, Utils.SCALE_MAP);
+    GameScene.setGraphicsContext(gc);
+    InputManager.keyboardHandle(scene);
+
+    loadMap();
+
+    root.getChildren().clear();
+    root.getChildren().addAll(canvas);
+
+    start();
+  }
 
   public static void loadMap() {
     String map = "res/levels/" + mapCurrent;
     File file = new File(map);
     try {
+      String s;
       Scanner sc = new Scanner(file);
-      int l = sc.nextInt();
-      level = l;
-      int r = sc.nextInt();
-      row = r;
-      int c = sc.nextInt();
-      col = c;
-      String s = sc.nextLine();
-      canvas.setWidth(Sprite.SCALED_SIZE * c * Utils.SCALE_MAP);
-      canvas.setHeight(Sprite.SCALED_SIZE * (r + 1) * Utils.SCALE_MAP);
-      for (int i = 1; i < r + 1; i++) {
+      level = sc.nextInt();
+      row = sc.nextInt();
+      col = sc.nextInt();
+      s = sc.nextLine();
+      canvas.setWidth(Sprite.SCALED_SIZE * col * Utils.SCALE_MAP);
+      canvas.setHeight(Sprite.SCALED_SIZE * (row + 1) * Utils.SCALE_MAP);
+
+      for (int i = 1; i < row + 1; i++) {
         s = sc.nextLine();
-        for (int j = 0; j < c; j++) {
+        for (int j = 0; j < col; j++) {
           if (s.charAt(j) != '#') {
             stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
           }
@@ -288,14 +293,18 @@ public class GameManagement {
   }
 
   public static void start() {
+
+
     currentGameTime = 0;
     startNanoTime = 0;
     SFX.playMusic(SFX.bombermanMusic_media);
+    GameScene.drawMenubar();
 
     runningGame();
   }
 
   public static void runningGame() {
+    boolean showStageLevel = false;
     timer = new AnimationTimer() {
       @Override
       public void handle(long l) {
@@ -306,16 +315,22 @@ public class GameManagement {
             ++currentGameTime;
           }
         }
-
-        if (!isPaused) {
-          if (InputManager.isPauseGame()) {
-            pause();
+        if (currentGameTime < 300) {
+          gc.setFill(Color.BLACK);
+          gc.setFont(new Font(72));
+          gc.fillText("Stage " + getLevel(), canvas.getWidth() / 2 - 250, canvas.getHeight() / 2 - 50);
+        } else {
+          if (!isPaused) {
+            if (InputManager.isPauseGame()) {
+              pause();
+            }
+            gc.clearRect(0, 0, Utils.CANVAS_WIDTH * Utils.SCALE_MAP, Utils.CANVAS_HEIGHT * Utils.SCALE_MAP);
+            update();
+            render();
+            GameScene.updateMenubar(itemsActivated,(int) Math.round((currentGameTime - 300)/130.0), score, heart, remainingBombs);
           }
-          gc.clearRect(0, 0, Utils.CANVAS_WIDTH * Utils.SCALE_MAP, Utils.CANVAS_HEIGHT * Utils.SCALE_MAP);
-          update();
-          render();
-          GameScene.updateMenubar(itemsActivated,(int) Math.round(currentGameTime/130.0), score, heart, remainingBombs);
         }
+
       }
     };
     timer.start();
@@ -367,8 +382,18 @@ public class GameManagement {
     timer.start();
   }
 
-  public static void reLoadMap() {
-    loadMap();
+
+  public static void handleReset() {
+    reset();
+    removeLayer(GameScreen.gameMenu);
+    GameManagement.init(mapCurrent);
+    primaryStage.setScene(GameManagement.getScene());
+
+    try {
+      resume();
+    } catch (Exception ignore) {
+
+    }
   }
 
   public static void reset() {
@@ -380,13 +405,14 @@ public class GameManagement {
     score = 0;
     heart = 3;
     remainingBombs = 20;
+    Bomber.reset();
+    SFX.pauseMusic();
     timer = null;
   }
 
   public static void exit() {
     reset();
     primaryStage.setScene(InitApp.getScene());
-    SFX.pauseMusic();
     try {
       resume();
     } catch (Exception ignore) {
