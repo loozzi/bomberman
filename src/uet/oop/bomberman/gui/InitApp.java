@@ -20,6 +20,7 @@ import uet.oop.bomberman.common.ButtonImage;
 import uet.oop.bomberman.common.Utils;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class InitApp {
   static Stage primaryStage = BombermanGame.primaryState;
@@ -58,7 +59,7 @@ public class InitApp {
 
     // Create Start button
     Button startBtn = (new ButtonImage(Utils.SRC_START_BTN, 460, 400, 240, 80, Utils.CSS_BUTTON_IMAGE, e -> {
-      GameManagement.init("Level1.txt");
+      GameManagement.init("Level1.txt", 3, 0, new ArrayList<>());
       primaryStage.setScene(GameManagement.getScene());
     })).getButton();
 

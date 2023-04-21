@@ -29,11 +29,11 @@ public class GameScreen {
 
   public static void initVictory() {
     victory = new StackPane();
-    victory.setPrefSize(Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT);
+    victory.setPrefSize(Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT - 100);
 
     Group body = new Group();
 
-    Canvas overlay = new Canvas(Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT);
+    Canvas overlay = new Canvas(Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT - 100);
     GraphicsContext gc = overlay.getGraphicsContext2D();
     gc.setFill(Color.BLACK);
     gc.fillRect(0, 0, Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT);
@@ -42,12 +42,12 @@ public class GameScreen {
     img.setLayoutX(217);
     img.setLayoutY(50);
 
-    Button btnChooseLevel = (new ButtonImage(Utils.SRC_TEXT_CHOOSE_LEVEL, 236, 250, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> {
-
+    Button btnChooseLevel = (new ButtonImage(Utils.SRC_TEXT_NEXT_LEVEL, 236, 250, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> {
+      GameManagement.handleNextLevel();
     })).getButton();
 
     Button btnMainMenu = (new ButtonImage(Utils.SRC_TEXT_MAIN_MENU, 236, 300, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> {
-
+      GameManagement.exit();
     })).getButton();
 
     body.getChildren().addAll(img, btnMainMenu, btnChooseLevel);
@@ -61,11 +61,11 @@ public class GameScreen {
 
   public static void initGameOver() {
     gameOver = new StackPane();
-    gameOver.setPrefSize(Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT);
+    gameOver.setPrefSize(Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT - 100);
 
     Group body = new Group();
 
-    Canvas overlay = new Canvas(Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT);
+    Canvas overlay = new Canvas(Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT - 100);
     GraphicsContext gc = overlay.getGraphicsContext2D();
     gc.setFill(Color.BLACK);
     gc.fillRect(0, 0, Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT);
@@ -74,19 +74,19 @@ public class GameScreen {
     img.setLayoutX(217);
     img.setLayoutY(50);
 
-    Button btnPlayAgain = (new ButtonImage(Utils.SRC_TEXT_PLAY_AGAIN, 236, 200, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> {
-
+    Button btnPlayAgain = (new ButtonImage(Utils.SRC_TEXT_PLAY_AGAIN, 236, 250, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> {
+      GameManagement.handleReset();
     })).getButton();
 
-    Button btnChooseLevel = (new ButtonImage(Utils.SRC_TEXT_CHOOSE_LEVEL, 236, 250, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> {
-
-    })).getButton();
+//    Button btnChooseLevel = (new ButtonImage(Utils.SRC_TEXT_CHOOSE_LEVEL, 236, 250, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> {
+//
+//    })).getButton();
 
     Button btnMainMenu = (new ButtonImage(Utils.SRC_TEXT_MAIN_MENU, 236, 300, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> {
-
+      GameManagement.exit();
     })).getButton();
 
-    body.getChildren().addAll(img, btnMainMenu, btnChooseLevel, btnPlayAgain);
+    body.getChildren().addAll(img, btnMainMenu, btnPlayAgain);
 
     gameOver.getChildren().addAll(overlay, body);
     overlay.setOpacity(0.6);
@@ -97,11 +97,11 @@ public class GameScreen {
 
   public static void initGameMenu() {
     gameMenu = new StackPane();
-    gameMenu.setPrefSize(Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT);
+    gameMenu.setPrefSize(Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT - 100);
 
     Group body = new Group();
 
-    Canvas overlay = new Canvas(Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT);
+    Canvas overlay = new Canvas(Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT - 100);
     GraphicsContext gc = overlay.getGraphicsContext2D();
     gc.setFill(Color.BLACK);
     gc.fillRect(0, 0, Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT);
@@ -141,11 +141,11 @@ public class GameScreen {
 
   public static void initGameSetting() {
     gameSetting = new StackPane();
-    gameSetting.setPrefSize(Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT);
+    gameSetting.setPrefSize(Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT - 100);
 
     Group body = new Group();
 
-    Canvas overlay = new Canvas(Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT);
+    Canvas overlay = new Canvas(Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT - 100);
     GraphicsContext gc = overlay.getGraphicsContext2D();
     gc.setFill(Color.BLACK);
     gc.fillRect(0, 0, Utils.CANVAS_WIDTH, Utils.CANVAS_HEIGHT);

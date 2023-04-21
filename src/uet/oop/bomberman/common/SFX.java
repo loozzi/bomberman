@@ -105,13 +105,16 @@ public class SFX {
 
     public static void playMusic(Media musicMedia) {
         try {
-            sfxPlayer.dispose();
-        } catch (Exception ignore) {
-
+            if (musicPlayer.getStatus() != MediaPlayer.Status.PLAYING) {
+                musicPlayer = new MediaPlayer(musicMedia);
+                musicPlayer.play();
+                musicPlayer.setVolume((double) volumeMusic / 100);
+            }
+        } catch (Exception exception) {
+            musicPlayer = new MediaPlayer(musicMedia);
+            musicPlayer.play();
+            musicPlayer.setVolume((double) volumeMusic / 100);
         }
-        musicPlayer = new MediaPlayer(musicMedia);
-        musicPlayer.play();
-        musicPlayer.setVolume((double) volumeMusic / 100);
     }
 
     public static void pauseSFX() {

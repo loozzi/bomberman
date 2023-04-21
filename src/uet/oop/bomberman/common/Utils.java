@@ -22,6 +22,7 @@ public class Utils {
   public static final String SRC_GAME_SETTING = "/textures/settingPanel.png";
   public static final String SRC_TEXT_MAIN_MENU = "/textures/mainMenu.png";
   public static final String SRC_TEXT_CHOOSE_LEVEL = "/textures/chooseLevel.png";
+  public static final String SRC_TEXT_NEXT_LEVEL = "/textures/nextLevel.png";
   public static final String SRC_TEXT_PLAY_AGAIN = "/textures/playAgain.png";
   public static final String SRC_TEXT_RESUME = "/textures/resume.png";
   public static final String SRC_TEXT_RESTART = "/textures/restart.png";

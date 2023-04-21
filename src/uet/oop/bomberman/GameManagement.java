@@ -46,8 +46,11 @@ public class GameManagement {
   private static long startNanoTime;
   static int score = 0;
   static int heart = 3;
+  static int initScore;
+  static int initHeart;
   static int remainingBombs = 50;
   static String mapCurrent;
+  static String mapNext;
 
   // all object
   private static List<Entity> entities = new ArrayList<>();
@@ -55,12 +58,11 @@ public class GameManagement {
   private static List<Entity> bombs = new ArrayList<>();
   private static List<Entity> items = new ArrayList<>();
   private static List<Entity> itemsActivated = new ArrayList<>();
+  private static List<Entity> initItemsActivated;
 
 
   // all status in a game
   static boolean isPaused;
-  static boolean isFreezy;
-  static boolean isBlind;
 
   //Level và tọa độ game.
   private static int level;
@@ -204,7 +206,13 @@ public class GameManagement {
   //|=======================================================|
   //|               GAME MANAGEMENT                         |
   //|=======================================================|
-  public static void init(String mapSrc) {
+  public static void init(String mapSrc, int _initHeart, int _initScore, List<Entity> _initItemsActivated) {
+    // init data
+    initHeart = _initHeart;
+    initScore = _initScore;
+    initItemsActivated = new ArrayList<>();
+    initItemsActivated.addAll(_initItemsActivated);
+
     mapCurrent = mapSrc;
     root = new Group();
     scene = new Scene(root);
@@ -254,7 +262,22 @@ public class GameManagement {
               stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
               break;
             case 'p':
-              entities.add(new Bomber(j, i, Sprite.player_down.getFxImage()));
+              Entity bomber = new Bomber(j, i, Sprite.player_down.getFxImage());
+              Bomber.reset();
+
+              for (Entity item : initItemsActivated) {
+                if (item instanceof BombItem) {
+                  Bomber.FlamepassItemIsActive();
+                } else if (item instanceof DetonatorItem) {
+                  Bomber.DetonatorItemIsActive();
+                } else if (item instanceof WallpassItem) {
+                  Bomber.WallpassItemIsActive();
+                } else if (item instanceof SpeedItem) {
+                  Bomber.increaseSpeed();
+                }
+              }
+
+              entities.add(bomber);
               break;
             case '1':
               entities.add(new Balloon(j, i, Sprite.balloom_left1.getFxImage()));
@@ -269,42 +292,55 @@ public class GameManagement {
               entities.add(new Kondoria(j, i, Sprite.kondoria_right1.getFxImage()));
               break;
             case 'b':
-              items.add(new BombItem(j, i, Sprite.powerup_bombs.getFxImage()));
+              Entity bombItem = new BombItem(j, i, Sprite.powerup_bombs.getFxImage());
+              bombItem.setDisable();
+              items.add(bombItem);
               stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
               stillObjects.remove(grass);
               break;
             case 'f':
-              items.add(new FlameItem(j, i, Sprite.powerup_flames.getFxImage()));
+              Entity flameItem = new FlameItem(j, i, Sprite.powerup_flames.getFxImage());
+              flameItem.setDisable();
+              items.add(flameItem);
               stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
               stillObjects.remove(grass);
               break;
             case 's':
-              items.add(new SpeedItem(j, i, Sprite.powerup_speed.getFxImage()));
+              Entity speedItem = new SpeedItem(j, i, Sprite.powerup_speed.getFxImage());
+              speedItem.setDisable();
+              items.add(speedItem);
               stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
               stillObjects.remove(grass);
               break;
             case 'd':
-              items.add(new DetonatorItem(j, i, Sprite.powerup_detonator.getFxImage()));
+              Entity detonatorItem = new DetonatorItem(j, i, Sprite.powerup_detonator.getFxImage());
+              detonatorItem.setDisable();
+              items.add(detonatorItem);
               stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
               stillObjects.remove(grass);
               break;
             case 'w':
-              items.add(new WallpassItem(j, i, Sprite.powerup_wallpass.getFxImage()));
+              Entity wallPassItem = new WallpassItem(j, i, Sprite.powerup_wallpass.getFxImage());
+              wallPassItem.setDisable();
+              items.add(wallPassItem);
               stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
               stillObjects.remove(grass);
               break;
             case 'l':
-              items.add(new FlamepassItem(j, i, Sprite.powerup_flamepass.getFxImage()));
+              Entity flamePassItem = new FlamepassItem(j, i, Sprite.powerup_flamepass.getFxImage());
+              flamePassItem.setDisable();
+              items.add(flamePassItem);
               stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
               stillObjects.remove(grass);
               break;
           }
         }
       }
+      mapNext = sc.nextLine();
+      System.out.println(mapNext);
     } catch (Exception e) {
       System.out.println(e.toString());
     }
-
   }
 
   public static void start() {
@@ -319,7 +355,6 @@ public class GameManagement {
   }
 
   public static void runningGame() {
-    boolean showStageLevel = false;
     timer = new AnimationTimer() {
       @Override
       public void handle(long l) {
@@ -381,14 +416,20 @@ public class GameManagement {
   //|            GAME CONTROLLER                 |
   //|============================================|
 
-  public static void pause() {
-    addLayer(GameScreen.gameMenu);
+  public static void handleVictory() {
+    addLayer(GameScreen.victory);
     isPaused = true;
     timer.stop();
   }
 
-  public static void freeze() {
+  public static void handleGameOver() {
 
+  }
+
+  public static void pause() {
+    addLayer(GameScreen.gameMenu);
+    isPaused = true;
+    timer.stop();
   }
 
   public static void resume() {
@@ -401,37 +442,51 @@ public class GameManagement {
   public static void handleReset() {
     reset();
     removeLayer(GameScreen.gameMenu);
-    GameManagement.init(mapCurrent);
+    GameManagement.init(mapCurrent, initHeart, initScore, initItemsActivated);
     primaryStage.setScene(GameManagement.getScene());
 
     try {
       resume();
-    } catch (Exception ignore) {
-
-    }
+    } catch (Exception ignore) { }
   }
 
   public static void reset() {
-    entities = new ArrayList<>();
-    stillObjects = new ArrayList<>();
-    bombs = new ArrayList<>();
-    items = new ArrayList<>();
-    itemsActivated = new ArrayList<>();
-    score = 0;
-    heart = 3;
-    remainingBombs = 20;
+    entities.clear();
+    stillObjects.clear();
+    bombs.clear();
+    items.clear();
+    itemsActivated.clear();
+    itemsActivated.addAll(initItemsActivated);
+    score = initScore;
+    heart = initHeart;
+    remainingBombs = 50;
     Bomber.reset();
-    SFX.pauseMusic();
     timer = null;
+  }
+
+  public static void handleNextLevel() {
+    entities.clear();
+    stillObjects.clear();
+    bombs.clear();
+    items.clear();
+    remainingBombs = 50;
+    timer = null;
+
+    removeLayer(GameScreen.victory);
+    GameManagement.init(mapNext, heart, score, itemsActivated);
+    primaryStage.setScene(GameManagement.getScene());
+
+    try {
+      resume();
+    } catch (Exception ignore) { }
   }
 
   public static void exit() {
     reset();
     primaryStage.setScene(InitApp.getScene());
+    SFX.pauseMusic();
     try {
       resume();
-    } catch (Exception ignore) {
-
-    }
+    } catch (Exception ignore) { }
   }
 }

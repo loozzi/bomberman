@@ -32,15 +32,15 @@ public class Brick extends Entity {
       }
     }
 
-    for (Entity stillObject : stillObjects) {
-      if (stillObject.getX() == this.x && stillObject.getY() == this.y && stillObject instanceof Portal) {
-        ((Portal) stillObject).setBrokenBrick();
-      }
-    }
     timeAnimation = (timeAnimation > MAX_TIME_ANIMATION) ? 0 : timeAnimation + 1;
     super.img = (Sprite.movingSprite(Sprite.brick_exploded, Sprite.brick_exploded1, Sprite.brick_exploded2, timeAnimation, timeRunAnimation)).getFxImage();
     if (timeAnimation > timeRunAnimation) {
       GameManagement.increaseScore("Brick");
+      for (Entity stillObject : stillObjects) {
+        if (stillObject.getX() == this.x && stillObject.getY() == this.y && stillObject instanceof Portal) {
+          ((Portal) stillObject).setBrokenBrick();
+        }
+      }
       GameManagement.getStillObjects().remove(this);
     }
   }

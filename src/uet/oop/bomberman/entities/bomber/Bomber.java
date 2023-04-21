@@ -70,15 +70,15 @@ public class Bomber extends Entity {
     DetonatorItemIsActive = true;
   }
 
-  public static boolean getDetonatorItemIsActive() {
-    return DetonatorItemIsActive;
-  }
-
   public static void WallpassItemIsActive() {
     WallpassItemIsActive = true;
   }
+
   public static void FlamepassItemIsActive() {
     FlamepassItemIsActive = true;
+  }
+  public static boolean getDetonatorItemIsActive() {
+    return DetonatorItemIsActive;
   }
 
   public static boolean getWallpassItemIsActive() {
