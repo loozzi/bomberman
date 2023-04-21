@@ -46,7 +46,7 @@ public class GameManagement {
   private static long startNanoTime;
   static int score = 0;
   static int heart = 3;
-  static int remainingBombs = 20;
+  static int remainingBombs = 50;
   static String mapCurrent;
 
   // all object
@@ -250,9 +250,8 @@ public class GameManagement {
               stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
               break;
             case 'x':
-              items.add(new Portal(j, i, Sprite.portal.getFxImage()));
+              stillObjects.add(new Portal(j, i, Sprite.portal.getFxImage()));
               stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
-              stillObjects.remove(grass);
               break;
             case 'p':
               entities.add(new Bomber(j, i, Sprite.player_down.getFxImage()));

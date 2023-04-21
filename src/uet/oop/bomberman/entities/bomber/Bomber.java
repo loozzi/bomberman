@@ -3,7 +3,6 @@ package uet.oop.bomberman.entities.bomber;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.GameManagement;
 import uet.oop.bomberman.common.Direction;
-import uet.oop.bomberman.common.SFX;
 import uet.oop.bomberman.controller.InputManager;
 import uet.oop.bomberman.entities.BombEffect;
 import uet.oop.bomberman.entities.Entity;
@@ -15,7 +14,6 @@ import uet.oop.bomberman.entities.tiles.Portal;
 import uet.oop.bomberman.entities.tiles.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -168,7 +166,7 @@ public class Bomber extends Entity {
                   && ((_x < entity.getX() + 30 && _x >= entity.getX())
                   || (_x + 24 > entity.getX() && _x <= entity.getX()))
           ) {
-            if (!handleCollide(entity, _x, _y)) {
+            if (handleCollideObject(entity, _x, _y)) {
               return false;
             }
           }
@@ -180,7 +178,7 @@ public class Bomber extends Entity {
                   && ((_x < entity.getX() + 30 && _x >= entity.getX())
                   || (_x + 24 > entity.getX() && _x <= entity.getX()))
           ) {
-            if (!handleCollide(entity, _x, _y)) {
+            if (handleCollideObject(entity, _x, _y)) {
               return false;
             }
           }
@@ -192,7 +190,7 @@ public class Bomber extends Entity {
                   && ((_y < entity.getY() + 30 && _y >= entity.getY())
                   || (_y + 30 > entity.getY() && _y <= entity.getY()))
           ) {
-            if (!handleCollide(entity, _x, _y)) {
+            if (handleCollideObject(entity, _x, _y)) {
               return false;
             }
           }
@@ -204,7 +202,7 @@ public class Bomber extends Entity {
                   && ((_y < entity.getY() + 30 && _y >= entity.getY())
                   || (_y + 30 > entity.getY() && _y <= entity.getY()))
           ) {
-            if (!handleCollide(entity, _x, _y)) {
+            if (handleCollideObject(entity, _x, _y)) {
               return false;
             }
           }
@@ -220,66 +218,68 @@ public class Bomber extends Entity {
    * @param entity Entity object
    * @return true | false - (true if collide brick or wall)
    */
-  public static boolean handleCollide(Entity entity, double _x, double _y) {
+  public static boolean handleCollideObject(Entity entity, double _x, double _y) {
     if (entity instanceof Wall || entity instanceof Brick) {
       if (entity.getX() / Sprite.SCALED_SIZE != 0 && entity.getY() / Sprite.SCALED_SIZE != 1
               && entity.getX() / Sprite.SCALED_SIZE != GameManagement.getCol() - 1
               && entity.getY() / Sprite.SCALED_SIZE != GameManagement.getRow()) {
-        return WallpassItemIsActive;
+        return !WallpassItemIsActive;
       }
-      return false;
+      return true;
     } else if (entity instanceof Bomb) {
-      return Math.round(_x / 32) == Math.round(entity.getX() / 32)
-              && Math.round(_y / 32) == Math.round(entity.getY() / 32);
+      return Math.round(_x / 32) != Math.round(entity.getX() / 32)
+              || Math.round(_y / 32) != Math.round(entity.getY() / 32);
     } else if (entity instanceof FlameItem) {
       System.out.println("Collide FlameItem");
       entity.setPicked_up();
-      return true;
+      return false;
     } else if (entity instanceof SpeedItem) {
       System.out.println("Collide SpeedItem");
       entity.setPicked_up();
-      return true;
+      return false;
     } else if (entity instanceof Balloon) {
       System.out.println("Collide Balloon");
       killed();
-      return true;
+      return false;
     } else if (entity instanceof Oneal) {
       System.out.println("Collide Oneal");
-      return true;
+      return false;
     } else if (entity instanceof Portal) {
-      System.out.println("Collide Portal");
-      entity.setPicked_up();
-      return true;
+      if (entity.getIsActve()) {
+        System.out.println("Collide Portal");
+        entity.setPicked_up();
+      }
+      return false;
     } else if (entity instanceof Grass) {
-      return true;
+      return false;
     } else if (entity instanceof BombEffect) {
       killed();
-      return false;
+      return true;
     } else if (entity instanceof BombItem) {
       System.out.println("Collide BombItem");
       entity.setPicked_up();
-      return true;
+      return false;
     } else if (entity instanceof DetonatorItem) {
       System.out.println("Collide DetonatorItem");
       entity.setPicked_up();
-      return true;
+      return false;
     } else if (entity instanceof WallpassItem) {
       System.out.println("Collide WallpassItem");
       entity.setPicked_up();
-      return true;
+      return false;
     } else if (entity instanceof FlamepassItem) {
       System.out.println("Collide FlamepassItem");
       entity.setPicked_up();
-      return true;
+      return false;
     } else if (entity instanceof Doll) {
       System.out.println("Collide Doll");
       killed();
-      return true;
+      return false;
     } else if (entity instanceof Kondoria) {
       System.out.println("Collide Kondoria");
       killed();
     }
-    return false;
+    return true;
   }
 
   /**
