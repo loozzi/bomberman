@@ -162,7 +162,7 @@ public class Bomber extends Entity {
     switch (direction) {
       case DOWN:
         for (Entity entity : merge) {
-          if ((_y + 30 > entity.getY() && _y <= entity.getY())
+          if (entity.getIsActve() && (_y + 30 > entity.getY() && _y <= entity.getY())
                   && ((_x < entity.getX() + 30 && _x >= entity.getX())
                   || (_x + 24 > entity.getX() && _x <= entity.getX()))
           ) {
@@ -174,7 +174,7 @@ public class Bomber extends Entity {
         break;
       case UP:
         for (Entity entity : merge) {
-          if ((_y < entity.getY() + 30 && _y > entity.getY())
+          if (entity.getIsActve() && (_y < entity.getY() + 30 && _y > entity.getY())
                   && ((_x < entity.getX() + 30 && _x >= entity.getX())
                   || (_x + 24 > entity.getX() && _x <= entity.getX()))
           ) {
@@ -186,7 +186,7 @@ public class Bomber extends Entity {
         break;
       case LEFT:
         for (Entity entity : merge) {
-          if ((_x < entity.getX() + 30 && _x > entity.getX())
+          if (entity.getIsActve() && (_x < entity.getX() + 30 && _x > entity.getX())
                   && ((_y < entity.getY() + 30 && _y >= entity.getY())
                   || (_y + 30 > entity.getY() && _y <= entity.getY()))
           ) {
@@ -198,7 +198,7 @@ public class Bomber extends Entity {
         break;
       case RIGHT:
         for (Entity entity : merge) {
-          if ((_x + 24 > entity.getX() && _x < entity.getX())
+          if (entity.getIsActve() && (_x + 24 > entity.getX() && _x < entity.getX())
                   && ((_y < entity.getY() + 30 && _y >= entity.getY())
                   || (_y + 30 > entity.getY() && _y <= entity.getY()))
           ) {
@@ -248,6 +248,7 @@ public class Bomber extends Entity {
       if (entity.getIsActve()) {
         System.out.println("Collide Portal");
         entity.setPicked_up();
+        GameManagement.handleVictory();
       }
       return false;
     } else if (entity instanceof Grass) {

@@ -4,6 +4,7 @@ import uet.oop.bomberman.GameManagement;
 import uet.oop.bomberman.entities.bomber.Bomber;
 import uet.oop.bomberman.entities.enemies.Bomb;
 import uet.oop.bomberman.entities.tiles.Brick;
+import uet.oop.bomberman.entities.tiles.Portal;
 import uet.oop.bomberman.entities.tiles.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 

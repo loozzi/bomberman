@@ -14,6 +14,7 @@ public abstract class Entity {
     protected Image img;
 
     protected boolean isActive = true;
+    protected boolean isBrokenBrick = false;
 
     //Item đã được nhặt hay chưa
     protected boolean picked_up = false;
@@ -51,5 +52,12 @@ public abstract class Entity {
 
     public Image getImg() {
         return this.img;
+    }
+
+    public void setDisable() {
+        isActive = false;
+    }
+    public void setActive() {
+        isActive = true;
     }
 }

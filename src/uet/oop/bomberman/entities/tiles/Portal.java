@@ -10,10 +10,12 @@ public class Portal extends Entity {
     isActive = false;
   }
 
+  public void setBrokenBrick() {
+    isBrokenBrick = true;
+  }
+
   @Override
   public void update() {
-    if (GameManagement.getEntities().size() == 1) {
-      isActive = true;
-    }
+    isActive = GameManagement.getEntities().size() == 1 && isBrokenBrick;
   }
 }
