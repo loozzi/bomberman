@@ -367,8 +367,8 @@ public class GameManagement {
         }
         if (currentGameTime < 300) {
           gc.setFill(Color.BLACK);
-          gc.setFont(new Font(72));
-          gc.fillText("Stage " + getLevel(), canvas.getWidth() / 2 - 250, canvas.getHeight() / 2 - 50);
+          gc.setFont(new Font("Minecraft", 96));
+          gc.fillText("Stage " + getLevel(), canvas.getWidth() / 2 - 275, canvas.getHeight() / 2 - 50);
         } else {
           if (!isPaused) {
             if (InputManager.isPauseGame()) {
@@ -417,13 +417,17 @@ public class GameManagement {
   //|============================================|
 
   public static void handleVictory() {
+    GameScreen.setScore(score);
     addLayer(GameScreen.victory);
     isPaused = true;
     timer.stop();
   }
 
   public static void handleGameOver() {
-
+    GameScreen.setScore(score);
+    addLayer(GameScreen.gameOver);
+    isPaused = true;
+    timer.stop();
   }
 
   public static void pause() {
@@ -473,6 +477,9 @@ public class GameManagement {
     timer = null;
 
     removeLayer(GameScreen.victory);
+    if (mapNext.equals("null")) {
+      mapNext = "Level1.txt";
+    }
     GameManagement.init(mapNext, heart, score, itemsActivated);
     primaryStage.setScene(GameManagement.getScene());
 
@@ -483,6 +490,13 @@ public class GameManagement {
 
   public static void exit() {
     reset();
+    mapCurrent = "Level1.txt";
+    initHeart = 3;
+    initScore = 0;
+    heart = 3;
+    score = 0;
+    initItemsActivated = new ArrayList<>();
+    itemsActivated.clear();
     primaryStage.setScene(InitApp.getScene());
     SFX.pauseMusic();
     try {

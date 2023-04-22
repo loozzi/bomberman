@@ -4,11 +4,13 @@ import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import uet.oop.bomberman.GameManagement;
 import uet.oop.bomberman.common.ButtonImage;
 import uet.oop.bomberman.common.SFX;
@@ -19,12 +21,18 @@ public class GameScreen {
   public static StackPane gameOver;
   public static StackPane gameMenu;
   public static StackPane gameSetting;
+  private static int score = 0;
 
   public static void init() {
     initVictory();
     initGameOver();
     initGameMenu();
     initGameSetting();
+  }
+
+  public static void setScore(int newScore) {
+    score = newScore;
+    initVictory();
   }
 
   public static void initVictory() {
@@ -42,6 +50,13 @@ public class GameScreen {
     img.setLayoutX(217);
     img.setLayoutY(50);
 
+
+    Label lbScore = new Label("Score: " + score);
+    lbScore.setLayoutX(250);
+    lbScore.setLayoutY(190);
+    lbScore.setTextFill(Color.WHITE);
+    lbScore.setStyle("-fx-font-size: 28; -fx-font-family: Minecraft");
+
     Button btnChooseLevel = (new ButtonImage(Utils.SRC_TEXT_NEXT_LEVEL, 236, 250, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> {
       GameManagement.handleNextLevel();
     })).getButton();
@@ -50,7 +65,7 @@ public class GameScreen {
       GameManagement.exit();
     })).getButton();
 
-    body.getChildren().addAll(img, btnMainMenu, btnChooseLevel);
+    body.getChildren().addAll(img, btnMainMenu, btnChooseLevel, lbScore);
 
     victory.getChildren().addAll(overlay, body);
     overlay.setOpacity(0.6);

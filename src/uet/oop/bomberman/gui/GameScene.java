@@ -69,9 +69,9 @@ public class GameScene {
     listItem.add(new Image(Utils.SRC_WALLPASS_DISABLED, 32, 32, false, false));
 
 
-    timer.setStyle("-fx-font-size: 24; -fx-font-weight: bold;");
-    score.setStyle("-fx-font-size: 24; -fx-font-weight: bold;");
-    remainingBombs.setStyle("-fx-font-size: 24; -fx-font-weight: bold;");
+    timer.setStyle("-fx-font-size: 24; -fx-font-family: Minecraft");
+    score.setStyle("-fx-font-size: 24; -fx-font-family: Minecraft");
+    remainingBombs.setStyle("-fx-font-size: 24; -fx-font-family: Minecraft");
 
     ColumnConstraints col1 = new ColumnConstraints();
     ColumnConstraints col2 = new ColumnConstraints();
@@ -89,6 +89,7 @@ public class GameScene {
     col6.setPrefWidth(Math.round(Utils.CANVAS_WIDTH / 7.0));
 
     Button btnPause = new Button("Pause");
+    btnPause.setStyle("-fx-font-family: Minecraft");
     btnPause.setPrefWidth(100);
     btnPause.setOnAction(e -> {
       GameManagement.pause();
