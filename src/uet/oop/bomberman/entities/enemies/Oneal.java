@@ -96,7 +96,7 @@ public class Oneal extends Enemy {
             (int) Math.round(bomber.getX() / 32)
     );
 
-    if (stMove.isEmpty() || stMove.size() > res.size()) {
+    if (stMove.isEmpty()) {
       stMove = res;
     }
 
