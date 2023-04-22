@@ -89,6 +89,12 @@ public class GameScreen {
     img.setLayoutX(217);
     img.setLayoutY(50);
 
+    Label lbScore = new Label("Score: " + score);
+    lbScore.setLayoutX(250);
+    lbScore.setLayoutY(190);
+    lbScore.setTextFill(Color.WHITE);
+    lbScore.setStyle("-fx-font-size: 28; -fx-font-family: Minecraft");
+
     Button btnPlayAgain = (new ButtonImage(Utils.SRC_TEXT_PLAY_AGAIN, 236, 250, 190, 40, Utils.CSS_BUTTON_IMAGE, e -> {
       GameManagement.handleReset();
     })).getButton();
