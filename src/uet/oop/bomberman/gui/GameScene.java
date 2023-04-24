@@ -30,9 +30,12 @@ public class GameScene {
   static Label timer;
   static Label score;
   static Label remainingBombs;
+  static Button btnPause;
+  static HBox btnWrapper;
   private static List<Image> listItem;
   private static int currentTime;
   private static int currentHeart;
+
 
   public static void setGraphicsContext(GraphicsContext _gc) {
     gc = _gc;
@@ -88,13 +91,13 @@ public class GameScene {
     col5.setPrefWidth(Math.round(Utils.CANVAS_WIDTH / 6.0));
     col6.setPrefWidth(Math.round(Utils.CANVAS_WIDTH / 7.0));
 
-    Button btnPause = new Button("Pause");
+    btnPause = new Button("Pause");
     btnPause.setStyle("-fx-font-family: Minecraft");
     btnPause.setPrefWidth(100);
     btnPause.setOnAction(e -> {
       GameManagement.pause();
     });
-    HBox btnWrapper = new HBox(btnPause);
+    btnWrapper = new HBox(btnPause);
     HBox.setMargin(btnPause, new Insets(8, 10, 10, 80));
 
     menubar.getRowConstraints().add(row);
@@ -105,7 +108,7 @@ public class GameScene {
     menubar.add(timer, 2, 0);
     menubar.add(score, 3, 0);
     menubar.add(remainingBombs, 4, 0);
-    menubar.add(btnWrapper, 5, 0);
+    menubar.add(btnPause, 5, 0);
 
 
     GameManagement.getRoot().getChildren().add(menubar);
@@ -141,11 +144,14 @@ public class GameScene {
       gcLeftSide.drawImage(listItem.get(i), i * 32, 4);
     }
 
-
+    timer.setText(String.format("Time left: %d", currentTime));
     if (currentTime + time != 60)
     {
       timer.setText(String.format("Time left: %d", currentTime));
       --currentTime;
+      if (currentTime < 0) {
+        GameManagement.handleGameOver();
+      }
     }
 
     score.setText(String.format("Score: %d", newScore));
@@ -158,5 +164,7 @@ public class GameScene {
       }
       currentHeart = newHeart;
     }
+
+
   }
 }

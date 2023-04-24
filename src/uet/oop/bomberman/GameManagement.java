@@ -200,6 +200,10 @@ public class GameManagement {
 
   public static void dies() {
     heart--;
+    remainingBombs = 50;
+    if (heart == 0) {
+      handleGameOver();
+    }
   }
 
 
@@ -274,6 +278,8 @@ public class GameManagement {
                   Bomber.WallpassItemIsActive();
                 } else if (item instanceof SpeedItem) {
                   Bomber.increaseSpeed();
+                } else if (item instanceof FlamepassItem) {
+                  Bomber.setFlameItemIsActive();
                 }
               }
 
@@ -425,6 +431,7 @@ public class GameManagement {
 
   public static void handleGameOver() {
     GameScreen.setScore(score);
+    GameScreen.initGameOver();
     addLayer(GameScreen.gameOver);
     isPaused = true;
     timer.stop();

@@ -107,10 +107,10 @@ public class GameScreen {
       GameManagement.exit();
     })).getButton();
 
-    body.getChildren().addAll(img, btnMainMenu, btnPlayAgain);
+    body.getChildren().addAll(img, btnMainMenu, btnPlayAgain, lbScore);
 
     gameOver.getChildren().addAll(overlay, body);
-    overlay.setOpacity(0.6);
+    overlay.setOpacity(0.8);
     overlay.setOnMouseClicked(e -> {
 
     });
