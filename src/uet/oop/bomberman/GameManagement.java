@@ -32,6 +32,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameManagement {
@@ -51,6 +52,7 @@ public class GameManagement {
   static int remainingBombs = 50;
   static String mapCurrent;
   static String mapNext;
+  static int numberOfItemRandom = 0;
 
   // all object
   private static List<Entity> entities = new ArrayList<>();
@@ -156,7 +158,79 @@ public class GameManagement {
     itemsActivated.clear();
   }
   public static void removeEnemy(Entity enemy) {
+    Random rand = new Random();
+    int randNumber = 0;
+    if (numberOfItemRandom < 2 && entities.size() > 2) {
+      randNumber = rand.nextInt(20);
+    }
+    switch (randNumber) {
+      case 1:
+        items.add(new BombItem(
+                (int) Math.round(enemy.getX() / 32),
+                (int) Math.round(enemy.getY() / 32),
+                Sprite.powerup_bombs.getFxImage()
+        ));
+        numberOfItemRandom++;
+        break;
+      case 2:
+        items.add(new DetonatorItem(
+                (int) Math.round(enemy.getX() / 32),
+                (int) Math.round(enemy.getY() / 32),
+                Sprite.powerup_detonator.getFxImage()
+        ));
+        numberOfItemRandom++;
+        break;
+      case 3:
+        items.add(new FlameItem(
+                (int) Math.round(enemy.getX() / 32),
+                (int) Math.round(enemy.getY() / 32),
+                Sprite.powerup_flames.getFxImage()
+        ));
+        numberOfItemRandom++;
+        break;
+      case 4:
+        items.add(new FlamepassItem(
+                (int) Math.round(enemy.getX() / 32),
+                (int) Math.round(enemy.getY() / 32),
+                Sprite.powerup_flamepass.getFxImage()
+        ));
+        numberOfItemRandom++;
+        break;
+      case 5:
+        items.add(new SpeedItem(
+                (int) Math.round(enemy.getX() / 32),
+                (int) Math.round(enemy.getY() / 32),
+                Sprite.powerup_speed.getFxImage()
+        ));
+        numberOfItemRandom++;
+        break;
+    }
+
+    if (randNumber >= 1 && randNumber <= 5) {
+      for (Entity entity : stillObjects) {
+        if (entity instanceof Grass) {
+          if (
+                  Math.round(entity.getX() / 32) == Math.round(enemy.getX() / 32)
+                  && Math.round(entity.getY() / 32) == Math.round(enemy.getY() / 32)
+          ) {
+            stillObjects.remove(entity);
+          }
+        }
+      }
+    }
+
     entities.remove(enemy);
+    // List has only Bomber
+    if (entities.size() == 1) {
+      Portal portal = new Portal(
+              (int) Math.round(enemy.getX() / 32),
+              (int) Math.round(enemy.getY() / 32),
+              Sprite.portal.getFxImage()
+      );
+      portal.setBrokenBrick();
+      stillObjects.add(portal);
+
+    }
   }
   public static void addEnemy(Entity enemy) {
     entities.add(enemy);

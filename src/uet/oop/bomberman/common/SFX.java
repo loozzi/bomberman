@@ -68,11 +68,11 @@ public class SFX {
     }
 
     public static void playSFX(Media sfxMedia) {
-//        try {
-//            sfxPlayer.dispose();
-//        } catch (Exception ignore) {
-//
-//        }
+        try {
+            sfxPlayer.dispose();
+        } catch (Exception ignore) {
+
+        }
         sfxPlayer = new MediaPlayer(sfxMedia);
         sfxPlayer.play();
         sfxPlayer.setVolume((double) volumeSFX / 100);
