@@ -7,9 +7,6 @@
 | 1   | Nguyễn Quang Thao    | 22022619     | 19/07/2004 |
 | 2   | Nguyễn Trần Hải Ninh | 22022526     | 23/11/2004 |
 
-### Demo game
-
-<img src="res/demo.png" alt="drawing" width="auto"/>
 
 ## Mô tả về các đối tượng trong trò chơi
 
@@ -31,12 +28,17 @@ Các _Item_ cũng được giấu phía sau Brick và chỉ hiện ra khi Brick 
 
 - ![](res/sprites/powerup_speed.png) _SpeedItem_ Khi sử dụng Item này, Bomber sẽ được tăng vận tốc di chuyển thêm một giá trị thích hợp
 - ![](res/sprites/powerup_flames.png) _FlameItem_ Item này giúp tăng phạm vi ảnh hưởng của Bomb khi nổ (độ dài các Flame lớn hơn)
-- ![](res/sprites/powerup_bombs.png) _BombItem_ Thông thường, nếu không có đối tượng Bomb nào đang trong trạng thái kích hoạt, Bomber sẽ được đặt và kích hoạt duy nhất một đối tượng Bomb. Item này giúp tăng số lượng Bomb có thể đặt thêm một.
+- ![](res/sprites/powerup_bombs.png) _BombItem_ Thông thường, nếu không có đối tượng Bomb nào đang trong trạng thái kích hoạt, _Bomber_ sẽ được đặt và kích hoạt duy nhất một đối tượng _Bomb_. Item này giúp tăng số lượng Bomb có thể đặt thêm một.
+- ![](res/sprites/powerup_detonator.png) _Detonator_ Khi sử dụng Item này bạn có thể kích hoạt Bomb nổ sớm hơn dự kiến.
+- ![](res/sprites/powerup_flamepass.png) _FlamePass_ Khi sử dụng Item này, bomb sẽ có tác động kể cả khi có vật cản (có tác dụng khi _FlameItem_ được kích hoạt).
+- ![](res/sprites/powerup_wallpass.png) _WallPass_ Khi Item được kích hoạt thì Bomber sẽ có khả năng đi qua _Wall_ hoặc _Brick_.
 
 Có nhiều loại Enemy trong Bomberman, tuy nhiên trong phiên bản này chỉ cài đặt những loại Enemy dưới đây:
 
 - ![](res/sprites/balloom_left1.png) _Balloom_ là Enemy đơn giản nhất, di chuyển ngẫu nhiên với vận tốc cố định
-- ![](res/sprites/oneal_left1.png) _Oneal_ có tốc độ di chuyển thay đổi, lúc nhanh, lúc chậm và di chuyển "thông minh" hơn so với Balloom
+- ![](res/sprites/oneal_left1.png) _Oneal_ có khả năng dò đường và di chuyển tới Bomber (sử dụng thuật toán BFS - kết quả tương đương thuật toán A*)
+- ![](res/sprites/doll_left1.png) _Doll_ có khả năng di chuyển xuyên qua vật thể nhưng tốc độ chậm hơn những Enemy khác.
+- ![](res/sprites/kondoria_left1.png) _Kondoria_ khi chết sẽ sinh ra 2 _Balloom_.
 
 ## Mô tả game play, xử lý va chạm và xử lý bom nổ
 
@@ -51,5 +53,6 @@ Có nhiều loại Enemy trong Bomberman, tuy nhiên trong phiên bản này ch�
 ## Các phím trong game
 
 - A/S/D/W: di chuyển _Bomber_ lần lượt là _trái/dưới/phải/trên_
-- H: đặt bom
-- Q: tạm dừng game
+- H/Space: Đặt bom
+- Q/ESC: Tạm dừng game
+- J/F: Kích hoạt _Bomb_

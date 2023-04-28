@@ -94,9 +94,22 @@ public class GameScene {
     btnPause = new Button("Pause");
     btnPause.setStyle("-fx-font-family: Minecraft");
     btnPause.setPrefWidth(100);
+    btnPause.setPrefHeight(28);
+    btnPause.setFocusTraversable(false);
     btnPause.setOnAction(e -> {
       GameManagement.pause();
     });
+    btnPause.setOnMouseMoved(e -> {
+      btnPause.setStyle("-fx-cursor: hand; -fx-font-family: Minecraft");
+      btnPause.setPrefWidth(120);
+      btnPause.setPrefHeight(32);
+    });
+    btnPause.setOnMouseExited(e -> {
+      btnPause.setStyle("-fx-font-family: Minecraft");
+      btnPause.setPrefWidth(100);
+      btnPause.setPrefHeight(28);
+    });
+
     btnWrapper = new HBox(btnPause);
     HBox.setMargin(btnPause, new Insets(8, 10, 10, 80));
 

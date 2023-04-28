@@ -42,7 +42,8 @@ public class InputManager {
           }
           break;
         case H:
-//          if (System.currentTimeMillis() - lastPressProcessed > 200) {
+        case SPACE:
+          //          if (System.currentTimeMillis() - lastPressProcessed > 200) {
 //            setBomb = true;
 //            lastPressProcessed = System.currentTimeMillis();
 //          }
@@ -51,6 +52,7 @@ public class InputManager {
           }
           break;
         case J:
+        case F:
           if (!inverted) {
             detonator = true;
           }
@@ -62,6 +64,7 @@ public class InputManager {
           }
           break;
         case Q:
+        case ESCAPE:
           if (System.currentTimeMillis() - lastPressProcessed > 200) {
             pauseGame = true;
             lastPressProcessed = System.currentTimeMillis();
@@ -154,11 +157,13 @@ public class InputManager {
           }
           break;
         case H:
+        case SPACE:
           setBomb = false;
         case K:
           controlBomb = false;
           break;
         case J:
+        case F:
           detonator = false;
           break;
         case F1:
