@@ -17,7 +17,11 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.abs;
+
 public class Bomber extends Entity {
+  private static boolean ghostmode = false;
+  private static int timeGhostmode = 0;
   private static double speed = 0.7;
   private final int MAX_TIME_ANIMATION = 6000;
   private int timeAnimation = 0;
@@ -89,6 +93,10 @@ public class Bomber extends Entity {
     return FlamepassItemIsActive;
   }
 
+  public static boolean getGhostmode() {
+    return ghostmode;
+  }
+
   /**
    * Check for duplicate bomb placement,
    * @return - true/false
@@ -123,12 +131,37 @@ public class Bomber extends Entity {
 
   @Override
   public void update() {
-    moveHanlde();
-    for (Entity bomb : GameManagement.getBombs()) {
-      if (bomb instanceof BombEffect) {
-        if (    ((int) Math.round(super.getX() / 32) == (int) Math.round(bomb.getX() / 32)
-                && (int) Math.round(super.getY() / 32) == (int) Math.round(bomb.getY() / 32))) {
-          killed();
+    if (!isAlive()) {
+      timeAnimation = (timeAnimation > MAX_TIME_ANIMATION) ? 0 : timeAnimation + 1;
+      super.img = Sprite.player_dead1.getFxImage();
+      if (timeAnimation >= 160) {
+        GameManagement.handleGameOver();
+      } else if (timeAnimation > 120) {
+        super.img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, Sprite.player_dead3, timeAnimation, timeRunAnimation).getFxImage();
+      }
+    } else {
+      if (ghostmode) {
+        timeGhostmode = (timeGhostmode > MAX_TIME_ANIMATION) ? 0 : timeGhostmode + 1;
+        if (timeGhostmode == 100) {
+          ghostmode = false;
+          isActive = true;
+        } else if (abs(timeGhostmode - 20) <= 5 || abs(timeGhostmode - 40) <= 5
+                || abs(timeGhostmode - 60) <= 5 || abs(timeGhostmode - 80) <=5
+                || abs(timeGhostmode - 100) <= 5) {
+          isActive = false;
+        } else {
+          isActive = true;
+        }
+      }
+      moveHanlde();
+      for (Entity bomb : GameManagement.getBombs()) {
+        if (bomb instanceof BombEffect) {
+          if (((int) Math.round(super.getX() / 32) == (int) Math.round(bomb.getX() / 32)
+                  && (int) Math.round(super.getY() / 32) == (int) Math.round(bomb.getY() / 32))) {
+            if (!ghostmode) {
+              killed();
+            }
+          }
         }
       }
     }
@@ -239,10 +272,15 @@ public class Bomber extends Entity {
       return false;
     } else if (entity instanceof Balloon) {
       System.out.println("Collide Balloon");
-      killed();
+      if (!ghostmode) {
+        killed();
+      }
       return false;
     } else if (entity instanceof Oneal) {
       System.out.println("Collide Oneal");
+      if (!ghostmode) {
+        killed();
+      }
       return false;
     } else if (entity instanceof Portal) {
       if (entity.getIsActve()) {
@@ -254,7 +292,9 @@ public class Bomber extends Entity {
     } else if (entity instanceof Grass) {
       return false;
     } else if (entity instanceof BombEffect) {
-      killed();
+      if (!ghostmode) {
+        killed();
+      }
       return true;
     } else if (entity instanceof BombItem) {
       System.out.println("Collide BombItem");
@@ -274,11 +314,15 @@ public class Bomber extends Entity {
       return false;
     } else if (entity instanceof Doll) {
       System.out.println("Collide Doll");
-      killed();
+      if (!ghostmode) {
+        killed();
+      }
       return false;
     } else if (entity instanceof Kondoria) {
       System.out.println("Collide Kondoria");
-      killed();
+      if (!ghostmode) {
+        killed();
+      }
     }
     return true;
   }
@@ -343,6 +387,12 @@ public class Bomber extends Entity {
 
   public static void killed() {
     System.out.println("killed");
+    GameManagement.dies();
+    timeGhostmode = 0;
+    ghostmode = true;
   }
 
+  public static boolean isAlive() {
+    return GameManagement.getHeart() != 0;
+  }
 }

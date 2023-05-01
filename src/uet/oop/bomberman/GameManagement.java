@@ -125,6 +125,9 @@ public class GameManagement {
   public static List<Entity> getItemsActivated() {
     return itemsActivated;
   }
+  public static int getHeart() {
+    return heart;
+  }
 
   public static void addBombs(Entity bomb) {
     if (bomb instanceof Bomb) {

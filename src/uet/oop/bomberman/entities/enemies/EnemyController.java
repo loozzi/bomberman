@@ -4,6 +4,7 @@ import uet.oop.bomberman.GameManagement;
 import uet.oop.bomberman.common.Direction;
 import uet.oop.bomberman.entities.BombEffect;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.bomber.Bomber;
 import uet.oop.bomberman.entities.items.BombItem;
 import uet.oop.bomberman.entities.tiles.Brick;
 import uet.oop.bomberman.entities.tiles.Wall;
@@ -29,6 +30,7 @@ public class EnemyController {
         List<Entity> merge = new ArrayList<Entity>();
         merge.addAll(GameManagement.getStillObjects());
         merge.addAll(GameManagement.getBombs());
+        merge.addAll(GameManagement.getEntities());
 
         for (Entity entity : merge) {
             switch (direction) {
@@ -131,6 +133,16 @@ public class EnemyController {
             ) {
                 try {
                     _entity.killed();
+                } catch (Exception ignored) {}
+            }
+            if ((int) Math.round(entity.getX()/32) == (int) Math.round(_x/32)
+                    && (int) Math.round(entity.getY()/32) == (int) Math.round(_y/32)
+                    && entity instanceof Bomber
+            ) {
+                try {
+                    if (!Bomber.getGhostmode()) {
+                        Bomber.killed();
+                    }
                 } catch (Exception ignored) {}
             }
         }
