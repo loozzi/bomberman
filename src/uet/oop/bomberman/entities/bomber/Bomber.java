@@ -24,7 +24,7 @@ public class Bomber extends Entity {
   private static int timeGhostmode = 0;
   private static double speed = 0.7;
   private final int MAX_TIME_ANIMATION = 6000;
-  private int timeAnimation = 0;
+  private static int timeAnimation = 0;
   private int timeRunAnimation = 40;
   //Biến số bom có thể đặt.
   private static int Bombs = 1;
@@ -135,6 +135,7 @@ public class Bomber extends Entity {
       timeAnimation = (timeAnimation > MAX_TIME_ANIMATION) ? 0 : timeAnimation + 1;
       super.img = Sprite.player_dead1.getFxImage();
       if (timeAnimation >= 160) {
+        super.img = Sprite.player_dead3.getFxImage();
         GameManagement.handleGameOver();
       } else if (timeAnimation > 120) {
         super.img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, Sprite.player_dead3, timeAnimation, timeRunAnimation).getFxImage();
@@ -389,6 +390,7 @@ public class Bomber extends Entity {
     System.out.println("killed");
     GameManagement.dies();
     timeGhostmode = 0;
+    timeAnimation = 0;
     ghostmode = true;
   }
 
