@@ -40,6 +40,9 @@ Có nhiều loại Enemy trong Bomberman, tuy nhiên trong phiên bản này ch�
 - ![](res/sprites/doll_left1.png) _Doll_ có khả năng di chuyển xuyên qua vật thể nhưng tốc độ chậm hơn những Enemy khác.
 - ![](res/sprites/kondoria_left1.png) _Kondoria_ khi chết sẽ sinh ra 2 _Balloom_.
 
+### Diagram
+<img src="./diagrams_img.png" height="100%">
+
 ## Mô tả game play, xử lý va chạm và xử lý bom nổ
 
 - Trong một màn chơi, Bomber sẽ được người chơi di chuyển, đặt và kích hoạt Bomb với mục tiêu chính là tiêu diệt tất cả Enemy và tìm ra vị trí Portal để có thể qua màn mới
